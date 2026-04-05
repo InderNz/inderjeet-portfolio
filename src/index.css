@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+body {
+  background-color: #f0ede6;
+  color: #1a1a1a;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+@keyframes gyroRing1 {
+  from { transform: rotateX(70deg) rotateZ(0deg); }
+  to   { transform: rotateX(70deg) rotateZ(360deg); }
+}
+@keyframes gyroRing2 {
+  from { transform: rotateX(70deg) rotateZ(60deg); }
+  to   { transform: rotateX(70deg) rotateZ(420deg); }
+}
+@keyframes gyroRing3 {
+  from { transform: rotateX(70deg) rotateZ(0deg); }
+  to   { transform: rotateX(70deg) rotateZ(-360deg); }
+}
+@keyframes gyroOrbit1 {
+  from { transform: rotate(0deg) translateX(110px) rotate(0deg); }
+  to   { transform: rotate(360deg) translateX(110px) rotate(-360deg); }
+}
+@keyframes gyroOrbit2 {
+  from { transform: rotate(120deg) translateX(110px) rotate(-120deg); }
+  to   { transform: rotate(480deg) translateX(110px) rotate(-480deg); }
+}
+@keyframes gyroOrbit3 {
+  from { transform: rotate(240deg) translateX(110px) rotate(-240deg); }
+  to   { transform: rotate(600deg) translateX(110px) rotate(-600deg); }
+}
+@keyframes gyroPulse {
+  0%,100% { opacity: 0.5; }
+  50%      { opacity: 1; }
+}
+
+.g-ring1 { animation: gyroRing1 8s linear infinite; transform-origin: 160px 160px; transform-box: fill-box; }
+.g-ring2 { animation: gyroRing2 12s linear infinite reverse; transform-origin: 160px 160px; transform-box: fill-box; }
+.g-ring3 { animation: gyroRing3 16s linear infinite; transform-origin: 160px 160px; transform-box: fill-box; }
+.g-dot1  { animation: gyroOrbit1 4s linear infinite; transform-origin: 160px 160px; transform-box: fill-box; }
+.g-dot2  { animation: gyroOrbit2 4s linear infinite; transform-origin: 160px 160px; transform-box: fill-box; }
+.g-dot3  { animation: gyroOrbit3 4s linear infinite; transform-origin: 160px 160px; transform-box: fill-box; }
+.g-pulse { animation: gyroPulse 3s ease-in-out infinite; }
