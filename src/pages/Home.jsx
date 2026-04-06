@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import InderjeetPic from '../assets/Inderjeet.jpeg'
 
 const SkillIcons = {
@@ -22,6 +23,13 @@ const SkillIcons = {
 }
 
 export default function Home() {
+
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+  useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth < 768)
+    window.addEventListener('resize', handler)
+    return () => window.removeEventListener('resize', handler)
+  }, [])
 
   const scrollTo = (id) => {
     document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' })
@@ -79,11 +87,11 @@ export default function Home() {
 
 
   return (
-    <div style={{ backgroundColor: '#f0ede6', minHeight: '100vh', paddingTop: '7rem' }}>
+    <div style={{ backgroundColor: '#f0ede6', minHeight: '100vh', paddingTop: isMobile ? '5rem' : '7rem', overflowX: 'hidden' }}>
 
       {/* HERO */}
-      <section id="home" style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 3rem 3rem', minHeight: '100vh', boxSizing: 'border-box' }}>
-        <div style={{ display: 'grid', gridTemplateColumns: '55% 45%', gap: '2rem' }}>
+      <section id="home" style={{ maxWidth: '1100px', margin: '0 auto', padding: isMobile ? '2rem 1.25rem 2rem' : '0 3rem 3rem', minHeight: '100vh', boxSizing: 'border-box' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '55% 45%', gap: '2rem' }}>
 
           {/* Left — all content */}
           <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -101,7 +109,7 @@ export default function Home() {
 
             <h1 style={{
               fontFamily: 'Playfair Display, serif',
-              fontSize: 'clamp(3.5rem, 8vw, 6.5rem)',
+              fontSize: isMobile ? 'clamp(3rem, 12vw, 5rem)' : 'clamp(3.5rem, 8vw, 6.5rem)',
               fontWeight: 400,
               lineHeight: 0.95,
               color: '#1c1917',
@@ -154,10 +162,10 @@ export default function Home() {
           </div>
 
           {/* Right — Stats quadrant + Know Me */}
-          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: 'flex-end', height: '100%' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', alignItems: isMobile ? 'stretch' : 'flex-end', height: isMobile ? 'auto' : '100%', marginTop: isMobile ? '2rem' : '0' }}>
 
             {/* Stats quadrant */}
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.65rem', width: '100%', paddingTop: 'calc(5rem + 5px)', alignItems: 'stretch' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.65rem', width: '100%', paddingTop: isMobile ? '0' : 'calc(5rem + 5px)', alignItems: 'stretch' }}>
               {[
                 { icon: <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>, label: 'QA LEADERSHIP',    value: '20+', unit: 'Years',              sub: 'Quinnox · Shawbrook · HAY Bank · Intel · Netcradle' },
                 { icon: <svg width="12" height="12" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M2.25 18L9 11.25l4.306 4.307a11.95 11.95 0 015.814-5.519l2.74-1.22m0 0l-5.94-2.28m5.94 2.28l-2.28 5.941" /></svg>, label: 'DEFECT REDUCTION', value: '37%', unit: 'Less leakage',       sub: 'Shift-left across domains' },
@@ -166,7 +174,7 @@ export default function Home() {
               ].map((stat, i) => (
                 <div key={i} style={{
                   display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
-                  padding: '1.5rem',
+                  padding: isMobile ? '0.85rem' : '1.5rem',
                   backgroundColor: 'rgba(255,255,255,0.45)',
                   border: '1px solid rgba(255,255,255,0.8)',
                   borderRadius: '1rem',
@@ -190,7 +198,7 @@ export default function Home() {
                     <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.6rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#b84a0a', fontWeight: 500 }}>{stat.label}</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.4rem', marginBottom: '0.5rem' }}>
-                    <span style={{ fontFamily: 'Playfair Display, serif', fontSize: '1.4rem', fontWeight: 200, color: '#1c1917', lineHeight: 1 }}>{stat.value}</span>
+                    <span style={{ fontFamily: 'Playfair Display, serif', fontSize: isMobile ? '1.8rem' : '1.4rem', fontWeight: 200, color: '#1c1917', lineHeight: 1 }}>{stat.value}</span>
                     <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.65rem', color: '#b84a0a', fontWeight: 250 }}>{stat.unit}</span>
                   </div>
                   <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.78rem', color: '#4a4540', fontWeight: 400, lineHeight: 1.4 }}>{stat.sub}</p>
@@ -256,11 +264,11 @@ export default function Home() {
 
       {/* ABOUT */}
       <section id="about" style={{ borderTop: '1px solid rgba(0,0,0,0.07)', backgroundColor: 'rgba(255,255,255,0.15)' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '3.5rem 3rem' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', alignItems: 'start' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: isMobile ? '3rem 1.25rem' : '3.5rem 3rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '2rem' : '6rem', alignItems: 'start' }}>
             <div>
               <span style={sectionLabel}>About Me</span>
-              <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: 'clamp(2.4rem, 4vw, 3.2rem)', fontWeight: 400, lineHeight: 1.1, color: '#1c1917', marginBottom: '2rem' }}>
+              <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: isMobile ? 'clamp(2rem, 8vw, 3rem)' : 'clamp(2.4rem, 4vw, 3.2rem)', fontWeight: 400, lineHeight: 1.1, color: '#1c1917', marginBottom: '2rem' }}>
                 Building Quality <br /><em>Culture</em>, that<br />scales.
               </h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
@@ -274,7 +282,7 @@ export default function Home() {
                 ))}
               </div>
             </div>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', paddingTop: '4rem', alignItems: 'stretch' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', paddingTop: isMobile ? '0' : '4rem', alignItems: 'stretch' }}>
               {[
                 {
                   icon: <svg width="18" height="18" fill="none" stroke="#b84a0a" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" /></svg>,
@@ -320,9 +328,9 @@ export default function Home() {
 
       {/* EXPERIENCE */}
       <section id="experience" style={{ borderTop: '1px solid rgba(0,0,0,0.07)' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '3.5rem 3rem' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: isMobile ? '3rem 1.25rem' : '3.5rem 3rem' }}>
           <span style={sectionLabel}>Career History</span>
-          <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: 'clamp(2.4rem, 4vw, 3.2rem)', fontWeight: 400, color: '#1c1917', marginBottom: '0.75rem', lineHeight: 1.1 }}>
+          <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: isMobile ? 'clamp(2rem, 8vw, 3rem)' : 'clamp(2.4rem, 4vw, 3.2rem)', fontWeight: 400, color: '#1c1917', marginBottom: '0.75rem', lineHeight: 1.1 }}>
             20+ Years of Delivery
           </h2>
           <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.9rem', color: '#4a4540', fontWeight: 400, marginBottom: '3.5rem', lineHeight: 1.8 }}>
@@ -461,7 +469,7 @@ export default function Home() {
 
       {/* SKILLS */}
       <section id="skills" style={{ borderTop: '1px solid rgba(0,0,0,0.07)', backgroundColor: 'rgba(255,255,255,0.15)', minHeight: '100vh', boxSizing: 'border-box' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '3.5rem 3rem' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: isMobile ? '3rem 1.25rem' : '3.5rem 3rem' }}>
           <span style={sectionLabel}>Expertise</span>
           <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: 'clamp(2rem, 3.5vw, 2.6rem)', fontWeight: 400, color: '#1c1917', marginBottom: '1.75rem', lineHeight: 1.1 }}>
             Skills & Certifications
@@ -548,14 +556,14 @@ export default function Home() {
                 ],
               },
             ].map((row, i, arr) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'flex-start', padding: '1.1rem 1.75rem', borderBottom: i < arr.length - 1 ? '1px solid rgba(0,0,0,0.05)' : 'none' }}>
+              <div key={i} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'flex-start', padding: '1.1rem 1.75rem', borderBottom: i < arr.length - 1 ? '1px solid rgba(0,0,0,0.05)' : 'none' }}>
                 {/* Left column */}
-                <div style={{ width: '220px', flexShrink: 0, paddingRight: '2rem' }}>
+                <div style={{ width: isMobile ? '100%' : '220px', flexShrink: 0, paddingRight: isMobile ? '0' : '2rem', marginBottom: isMobile ? '0.75rem' : '0' }}>
                   <span style={{ display: 'inline-block', marginBottom: '0.3rem' }}>{row.icon}</span>
                   <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.88rem', fontWeight: 600, color: '#1c1917', lineHeight: 1.4 }}>{row.title}</p>
                 </div>
                 {/* Right column */}
-                <ul style={{ flex: 1, listStyle: 'none', padding: 0, margin: 0 }}>
+                <ul style={{ flex: 1, listStyle: 'none', padding: 0, margin: 0, width: isMobile ? '100%' : 'auto' }}>
                   {row.bullets.map((pt, j) => (
                     <li key={j} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', marginBottom: '0.3rem' }}>
                       <span style={{ color: '#b84a0a', fontSize: '0.75rem', marginTop: '0.2rem', flexShrink: 0 }}>→</span>
@@ -569,7 +577,7 @@ export default function Home() {
 
           {/* Certifications — full width, 2-column pill grid */}
           <span style={sectionLabel}>Certifications</span>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.4rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '0.4rem' }}>
             {[
               { name: 'SAFe 6 Agilist', body: 'Scaled Agile', status: 'active' },
               { name: 'PRINCE2 Agile Practitioner', body: 'AXELOS', status: 'active' },
@@ -596,10 +604,10 @@ export default function Home() {
 
       {/* AI SPECIALISATION */}
       <section id="current-focus" style={{ borderTop: '1px solid rgba(0,0,0,0.07)', boxSizing: 'border-box', minHeight: '100vh' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '6rem 3rem' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: isMobile ? '3rem 1.25rem' : '6rem 3rem' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             <span style={sectionLabel}>Current Focus</span>
-            <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: '2.6rem', fontWeight: 400, color: '#1c1917', lineHeight: 1.2, marginBottom: '0' }}>
+            <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: isMobile ? 'clamp(2rem, 8vw, 3rem)' : '2.6rem', fontWeight: 400, color: '#1c1917', lineHeight: 1.2, marginBottom: '0' }}>
               Specialising in AI Quality Engineering
             </h2>
             <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.92rem', color: '#5c5448', lineHeight: 1.85, fontWeight: 400, maxWidth: '700px' }}>
@@ -624,11 +632,11 @@ export default function Home() {
 
       {/* CONTACT */}
       <section id="contact" style={{ borderTop: '1px solid rgba(0,0,0,0.07)' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: '3.5rem 3rem 8rem' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', alignItems: 'start' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: isMobile ? '3rem 1.25rem 4rem' : '3.5rem 3rem 8rem' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '2rem' : '6rem', alignItems: 'start' }}>
             <div>
               <span style={sectionLabel}>Get in Touch</span>
-              <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: 'clamp(2.4rem, 4vw, 3.2rem)', fontWeight: 400, lineHeight: 1.1, color: '#1c1917', marginBottom: '1.5rem' }}>
+              <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: isMobile ? 'clamp(2rem, 8vw, 3rem)' : 'clamp(2.4rem, 4vw, 3.2rem)', fontWeight: 400, lineHeight: 1.1, color: '#1c1917', marginBottom: '1.5rem' }}>
                 Let's work<br />together.
               </h2>
               <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.92rem', color: '#4a4540', lineHeight: 1.85, fontWeight: 400, marginBottom: '2.5rem', maxWidth: '380px' }}>
@@ -654,7 +662,7 @@ export default function Home() {
               </div>
             </div>
 
-            <div style={{ paddingTop: '4rem' }}>
+            <div style={{ paddingTop: isMobile ? '0' : '4rem' }}>
               <span style={sectionLabel}>What I'm looking for</span>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', marginBottom: '1.5rem' }}>
                 {[
@@ -681,7 +689,7 @@ export default function Home() {
       </section>
 
       {/* FOOTER */}
-      <footer style={{ borderTop: '1px solid rgba(0,0,0,0.07)', padding: '2rem 3rem', textAlign: 'center' }}>
+      <footer style={{ borderTop: '1px solid rgba(0,0,0,0.07)', padding: isMobile ? '2rem 1.25rem' : '2rem 3rem', textAlign: 'center' }}>
         <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.58rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#b5a990' }}>
           © 2025 Inderjeet Singh · Palmerston North, New Zealand · AI Quality Engineering
         </p>
