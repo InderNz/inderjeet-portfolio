@@ -1,5 +1,6 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
+import { useTheme } from '../hooks/useTheme'
 
 const links = [
   { label: 'Home', id: 'home' },
@@ -10,8 +11,43 @@ const links = [
   { label: 'Contact', id: 'contact' },
 ]
 
+function ThemeToggle({ theme, onToggle }) {
+  return (
+    <button
+      aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+      onClick={onToggle}
+      style={{
+        width: '2.2rem',
+        height: '2.2rem',
+        borderRadius: '9999px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        color: 'var(--accent)',
+        background: 'none',
+        border: '1px solid transparent',
+        cursor: 'pointer',
+        flexShrink: 0,
+        padding: 0,
+      }}
+    >
+      {theme === 'dark' ? (
+        <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
+        </svg>
+      ) : (
+        <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+        </svg>
+      )}
+    </button>
+  )
+}
+
 export default function Navbar() {
   const { pathname } = useLocation()
+  const navigate = useNavigate()
+  const { theme, toggleTheme } = useTheme()
   const [activeSection, setActiveSection] = useState('home')
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -26,19 +62,15 @@ export default function Navbar() {
     const handleScroll = () => {
       const sections = ['home', 'about', 'experience', 'skills', 'current-focus', 'contact']
       let current = 'home'
-
       for (const section of sections) {
         const element = document.getElementById(section)
         if (element) {
           const rect = element.getBoundingClientRect()
-          if (rect.top <= window.innerHeight * 0.5) {
-            current = section
-          }
+          if (rect.top <= window.innerHeight * 0.5) current = section
         }
       }
       setActiveSection(current)
     }
-
     handleScroll()
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
@@ -58,19 +90,38 @@ export default function Navbar() {
     alignItems: 'center',
     width: isMobile ? '90%' : '100%',
     maxWidth: isMobile ? 'none' : '1052px',
-    backgroundColor: 'rgba(225,210,195,0.88)',
+    backgroundColor: 'var(--navbar-bg)',
     backdropFilter: 'blur(30px)',
     WebkitBackdropFilter: 'blur(20px)',
     borderRadius: '9999px',
     padding: '0.5rem 0.75rem',
-    border: '1px solid rgba(255, 255, 255, 0.6)',
+    border: '1px solid var(--navbar-bd)',
     boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
   }
+
+  const iconBtnStyle = (isActive) => ({
+    width: '2.2rem',
+    height: '2.2rem',
+    borderRadius: '9999px',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: isActive ? 'var(--accent-dark)' : 'var(--accent)',
+    textDecoration: 'none',
+    flexShrink: 0,
+    backgroundColor: isActive ? 'var(--nav-active-bg)' : 'transparent',
+    border: isActive ? '1px solid var(--nav-active-bd)' : '1px solid transparent',
+    backdropFilter: isActive ? 'blur(12px)' : 'none',
+    WebkitBackdropFilter: isActive ? 'blur(12px)' : 'none',
+    boxShadow: isActive ? 'inset 0 1px 0 var(--glass-sh-sm), 0 2px 8px var(--accent-bg-lg)' : 'none',
+  })
 
   const scrollToSection = (id) => {
     const el = document.getElementById(id)
     if (el) {
       window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 55, behavior: 'smooth' })
+    } else {
+      window.location.assign(`/#${id}`)
     }
     setMenuOpen(false)
   }
@@ -81,86 +132,80 @@ export default function Navbar() {
         <div style={barStyle}>
 
           {/* Home icon */}
-          <Link to="#home" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); setMenuOpen(false) }} style={{
-            width: '2.2rem',
-            height: '2.2rem',
-            borderRadius: '9999px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: activeSection === 'home' ? '#7c3008' : '#b84a0a',
-            textDecoration: 'none',
-            flexShrink: 0,
-            backgroundColor: activeSection === 'home' ? 'rgba(255,255,255,0.35)' : 'transparent',
-            border: activeSection === 'home' ? '1px solid rgba(194,80,10,0.25)' : '1px solid transparent',
-            backdropFilter: activeSection === 'home' ? 'blur(12px)' : 'none',
-            WebkitBackdropFilter: activeSection === 'home' ? 'blur(12px)' : 'none',
-            boxShadow: activeSection === 'home' ? 'inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 8px rgba(194,80,10,0.15)' : 'none',
-          }}>
+          <Link
+            to="/"
+            aria-label="Home"
+            onClick={(e) => { e.preventDefault(); if (pathname === '/') { window.scrollTo({ top: 0, behavior: 'smooth' }) } else { navigate('/') } setMenuOpen(false) }}
+            style={iconBtnStyle(activeSection === 'home')}
+          >
             <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 12l8.954-8.955a1.126 1.126 0 011.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75" />
             </svg>
           </Link>
 
           {isMobile ? (
-            /* Mobile: spacer + hamburger */
             <>
               <div style={{ flex: 1 }} />
+              <ThemeToggle theme={theme} onToggle={toggleTheme} />
               <button
+                aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+                aria-expanded={menuOpen}
                 onClick={() => setMenuOpen(o => !o)}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '0.4rem', color: '#b84a0a', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '0.4rem', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
               >
                 {menuOpen ? (
-                  <svg width="20" height="20" fill="none" stroke="#b84a0a" strokeWidth="2" viewBox="0 0 24 24">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 ) : (
-                  <svg width="20" height="20" fill="none" stroke="#b84a0a" strokeWidth="2" viewBox="0 0 24 24">
+                  <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
                   </svg>
                 )}
               </button>
             </>
           ) : (
-            /* Desktop: nav links evenly distributed */
-            links.slice(1).map(link => (
-              <a
-                key={link.id}
-                href={`#${link.id}`}
-                onClick={(e) => {
-                  e.preventDefault()
-                  const el = document.getElementById(link.id)
-                  if (el) {
-                    window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 55, behavior: 'smooth' })
-                  } else {
-                    window.location.href = `/#${link.id}`
-                  }
-                }}
-                style={{
-                  flex: 1,
-                  textAlign: 'center',
-                  fontFamily: 'DM Mono, monospace',
-                  fontSize: '0.62rem',
-                  letterSpacing: '0.14em',
-                  textTransform: 'uppercase',
-                  textDecoration: 'none',
-                  padding: '0.5rem 0',
-                  borderRadius: '9999px',
-                  color: activeSection === link.id ? '#7c3008' : '#b84a0a',
-                  backgroundColor: activeSection === link.id ? 'rgba(255,255,255,0.35)' : 'transparent',
-                  border: activeSection === link.id ? '1px solid rgba(194,80,10,0.25)' : '1px solid transparent',
-                  backdropFilter: activeSection === link.id ? 'blur(12px)' : 'none',
-                  WebkitBackdropFilter: activeSection === link.id ? 'blur(12px)' : 'none',
-                  boxShadow: activeSection === link.id ? 'inset 0 1px 0 rgba(255,255,255,0.5), 0 2px 8px rgba(194,80,10,0.15)' : 'none',
-                  transition: 'all 0.2s',
-                  cursor: 'pointer',
-                }}
-                onMouseEnter={e => { if (activeSection !== link.id) { e.currentTarget.style.color = '#7c3008'; e.currentTarget.style.backgroundColor = 'rgba(255,255,255,0.2)' } }}
-                onMouseLeave={e => { if (activeSection !== link.id) { e.currentTarget.style.color = '#b84a0a'; e.currentTarget.style.backgroundColor = 'transparent' } }}
-              >
-                {link.label}
-              </a>
-            ))
+            <>
+              {links.slice(1).map(link => (
+                <a
+                  key={link.id}
+                  href={`#${link.id}`}
+                  onClick={(e) => {
+                    e.preventDefault()
+                    const el = document.getElementById(link.id)
+                    if (el) {
+                      window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 55, behavior: 'smooth' })
+                    } else {
+                      window.location.assign(`/#${link.id}`)
+                    }
+                  }}
+                  style={{
+                    flex: 1,
+                    textAlign: 'center',
+                    fontFamily: 'DM Mono, monospace',
+                    fontSize: '0.62rem',
+                    letterSpacing: '0.14em',
+                    textTransform: 'uppercase',
+                    textDecoration: 'none',
+                    padding: '0.5rem 0',
+                    borderRadius: '9999px',
+                    color: activeSection === link.id ? 'var(--accent-dark)' : 'var(--accent)',
+                    backgroundColor: activeSection === link.id ? 'var(--nav-active-bg)' : 'transparent',
+                    border: activeSection === link.id ? '1px solid var(--nav-active-bd)' : '1px solid transparent',
+                    backdropFilter: activeSection === link.id ? 'blur(12px)' : 'none',
+                    WebkitBackdropFilter: activeSection === link.id ? 'blur(12px)' : 'none',
+                    boxShadow: activeSection === link.id ? 'inset 0 1px 0 var(--glass-sh-sm), 0 2px 8px var(--accent-bg-lg)' : 'none',
+                    transition: 'all 0.2s',
+                    cursor: 'pointer',
+                  }}
+                  onMouseEnter={e => { if (activeSection !== link.id) { e.currentTarget.style.color = 'var(--accent-dark)'; e.currentTarget.style.backgroundColor = 'var(--nav-hover-bg)' } }}
+                  onMouseLeave={e => { if (activeSection !== link.id) { e.currentTarget.style.color = 'var(--accent)'; e.currentTarget.style.backgroundColor = 'transparent' } }}
+                >
+                  {link.label}
+                </a>
+              ))}
+              <ThemeToggle theme={theme} onToggle={toggleTheme} />
+            </>
           )}
         </div>
 
@@ -168,8 +213,8 @@ export default function Navbar() {
         {isMobile && menuOpen && (
           <div style={{
             marginTop: '0.5rem',
-            backgroundColor: 'rgba(255,255,255,0.96)',
-            border: '1px solid rgba(255,255,255,0.8)',
+            backgroundColor: 'var(--mobile-menu-bg)',
+            border: '1px solid var(--glass-bd)',
             borderRadius: '1rem',
             backdropFilter: 'blur(20px)',
             WebkitBackdropFilter: 'blur(20px)',
@@ -189,11 +234,11 @@ export default function Navbar() {
                   fontSize: '0.65rem',
                   letterSpacing: '0.14em',
                   textTransform: 'uppercase',
-                  color: activeSection === link.id ? '#b84a0a' : '#78716c',
+                  color: activeSection === link.id ? 'var(--accent)' : 'var(--text-muted)',
                   fontWeight: activeSection === link.id ? 600 : 400,
                   background: 'none',
                   border: 'none',
-                  borderBottom: '1px solid rgba(0,0,0,0.05)',
+                  borderBottom: '1px solid var(--border-sm)',
                   cursor: 'pointer',
                 }}
               >

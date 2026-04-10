@@ -1,12 +1,12 @@
 export default function Contact() {
   const glassCard = {
     padding: '2rem',
-    backgroundColor: 'rgba(255,255,255,0.5)',
-    border: '1px solid rgba(255,255,255,0.8)',
+    backgroundColor: 'var(--glass-bg)',
+    border: '1px solid var(--glass-bd)',
     borderRadius: '1.25rem',
     backdropFilter: 'blur(16px)',
     WebkitBackdropFilter: 'blur(16px)',
-    boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.9), 0 1px 4px rgba(0,0,0,0.05)',
+    boxShadow: 'inset 0 1px 0 var(--glass-sh), 0 1px 4px var(--border-sm)',
   }
 
   const label = {
@@ -14,7 +14,7 @@ export default function Contact() {
     fontSize: '0.62rem',
     letterSpacing: '0.2em',
     textTransform: 'uppercase',
-    color: '#b5a990',
+    color: 'var(--text-faint)',
     marginBottom: '1.5rem',
     display: 'block',
   }
@@ -56,14 +56,14 @@ export default function Contact() {
   ]
 
   return (
-    <div style={{ backgroundColor: '#f0ede6', minHeight: '100vh', paddingTop: '7rem' }}>
+    <div style={{ backgroundColor: 'var(--bg-page)', minHeight: '100vh', paddingTop: '7rem' }}>
       <section style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 3rem' }}>
 
         <p style={label}>Get in Touch</p>
-        <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: 'clamp(2.8rem, 5vw, 4rem)', fontWeight: 400, color: '#1c1917', lineHeight: 1.1, marginBottom: '1.5rem' }}>
+        <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: 'clamp(2.8rem, 5vw, 4rem)', fontWeight: 400, color: 'var(--text-primary)', lineHeight: 1.1, marginBottom: '1.5rem' }}>
           Let's work<br /><em>together.</em>
         </h1>
-        <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.95rem', color: '#78716c', fontWeight: 300, lineHeight: 1.85, marginBottom: '4rem', maxWidth: '520px' }}>
+        <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.95rem', color: 'var(--text-muted)', fontWeight: 300, lineHeight: 1.85, marginBottom: '4rem', maxWidth: '520px' }}>
           Open to QA leadership, AI quality engineering, and test management roles in New Zealand.
           If you're building something that needs to be done right, I'd love to hear from you.
         </p>
@@ -87,31 +87,31 @@ export default function Contact() {
                   transition: 'box-shadow 0.2s',
                   cursor: 'pointer',
                 }}
-                onMouseEnter={e => e.currentTarget.style.boxShadow = 'inset 0 1px 0 rgba(255,255,255,0.9), 0 4px 16px rgba(0,0,0,0.08)'}
-                onMouseLeave={e => e.currentTarget.style.boxShadow = 'inset 0 1px 0 rgba(255,255,255,0.9), 0 1px 4px rgba(0,0,0,0.05)'}
+                onMouseEnter={e => e.currentTarget.style.boxShadow = 'inset 0 1px 0 var(--glass-sh), 0 4px 16px var(--border-md)'}
+                onMouseLeave={e => e.currentTarget.style.boxShadow = 'inset 0 1px 0 var(--glass-sh), 0 1px 4px var(--border-sm)'}
               >
                 <div style={{
                   width: '2.75rem',
                   height: '2.75rem',
                   borderRadius: '0.75rem',
-                  backgroundColor: 'rgba(194,80,10,0.08)',
-                  border: '1px solid rgba(194,80,10,0.15)',
+                  backgroundColor: 'var(--accent-bg-sm)',
+                  border: '1px solid var(--accent-bg-lg)',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
-                  color: '#b84a0a',
+                  color: 'var(--accent)',
                   flexShrink: 0,
                 }}>
                   {item.icon}
                 </div>
                 <div>
-                  <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.58rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#b5a990', marginBottom: '0.2rem' }}>
+                  <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.58rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--text-faint)', marginBottom: '0.2rem' }}>
                     {item.label}
                   </p>
-                  <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.9rem', fontWeight: 500, color: '#1c1917', marginBottom: '0.15rem' }}>
+                  <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.9rem', fontWeight: 500, color: 'var(--text-primary)', marginBottom: '0.15rem' }}>
                     {item.value}
                   </p>
-                  <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.78rem', color: '#a09880', fontWeight: 300 }}>
+                  <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.78rem', color: 'var(--text-meta)', fontWeight: 300 }}>
                     {item.description}
                   </p>
                 </div>
@@ -122,15 +122,15 @@ export default function Contact() {
           {/* Right — Availability + what I'm looking for */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
 
-            <div style={{ ...glassCard, borderColor: 'rgba(13,148,136,0.15)', background: 'linear-gradient(135deg, rgba(255,255,255,0.6), rgba(220,248,244,0.3))' }}>
-              <p style={{ ...label, color: '#0d9488', marginBottom: '0.75rem' }}>Availability</p>
+            <div style={{ ...glassCard, borderColor: 'var(--teal-bg-md)', background: 'linear-gradient(135deg, rgba(255,255,255,0.6), var(--gradient-teal))' }}>
+              <p style={{ ...label, color: 'var(--teal)', marginBottom: '0.75rem' }}>Availability</p>
               <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginBottom: '0.75rem' }}>
-                <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: '#0d9488', display: 'inline-block', boxShadow: '0 0 0 3px rgba(13,148,136,0.2)' }} />
-                <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.9rem', fontWeight: 500, color: '#1c1917' }}>
+                <span style={{ width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--teal)', display: 'inline-block', boxShadow: '0 0 0 3px var(--teal-bd)' }} />
+                <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.9rem', fontWeight: 500, color: 'var(--text-primary)' }}>
                   Available now · Palmerston North, NZ
                 </span>
               </div>
-              <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.83rem', color: '#78716c', lineHeight: 1.75, fontWeight: 300 }}>
+              <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.83rem', color: 'var(--text-muted)', lineHeight: 1.75, fontWeight: 300 }}>
                 Open to permanent and contract roles. Happy to relocate within NZ or work remotely.
               </p>
             </div>
@@ -146,15 +146,15 @@ export default function Contact() {
                   'Remote-first teams across APAC',
                 ].map((item, i) => (
                   <div key={i} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start' }}>
-                    <span style={{ color: '#b84a0a', fontFamily: 'DM Mono, monospace', fontSize: '0.7rem', marginTop: '0.15rem', flexShrink: 0 }}>→</span>
-                    <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.83rem', color: '#78716c', fontWeight: 300, lineHeight: 1.6 }}>{item}</span>
+                    <span style={{ color: 'var(--accent)', fontFamily: 'DM Mono, monospace', fontSize: '0.7rem', marginTop: '0.15rem', flexShrink: 0 }}>→</span>
+                    <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.83rem', color: 'var(--text-muted)', fontWeight: 300, lineHeight: 1.6 }}>{item}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             <div style={{ ...glassCard, textAlign: 'center' }}>
-              <p style={{ fontFamily: 'Playfair Display, serif', fontSize: '1rem', fontStyle: 'italic', color: '#44403c', lineHeight: 1.6, marginBottom: '1rem' }}>
+              <p style={{ fontFamily: 'Playfair Display, serif', fontSize: '1rem', fontStyle: 'italic', color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: '1rem' }}>
                 "Quality is not an act — it is a habit built into every team, every process, every release."
               </p>
               <a
@@ -166,14 +166,14 @@ export default function Contact() {
                   alignItems: 'center',
                   gap: '0.5rem',
                   padding: '0.65rem 1.5rem',
-                  backgroundColor: 'rgba(194,80,10,0.1)',
-                  border: '1px solid rgba(194,80,10,0.2)',
+                  backgroundColor: 'var(--accent-bg-md)',
+                  border: '1px solid var(--accent-bg-xl)',
                   borderRadius: '9999px',
                   fontFamily: 'DM Mono, monospace',
                   fontSize: '0.6rem',
                   letterSpacing: '0.12em',
                   textTransform: 'uppercase',
-                  color: '#b84a0a',
+                  color: 'var(--accent)',
                   textDecoration: 'none',
                   transition: 'all 0.2s',
                 }}

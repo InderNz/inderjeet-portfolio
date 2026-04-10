@@ -1,16 +1,16 @@
 export default function About() {
   return (
-    <div style={{ backgroundColor: '#f0ede6', minHeight: '100vh', paddingTop: '7rem' }}>
+    <div style={{ backgroundColor: 'var(--bg-page)', minHeight: '100vh', paddingTop: '7rem' }}>
       <section style={{ maxWidth: '1100px', margin: '0 auto', padding: '0 3rem' }}>
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '6rem', alignItems: 'start' }}>
 
           {/* Left */}
           <div>
-            <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.75rem', letterSpacing: '0.06em', textTransform: 'uppercase', color: '#b84a0a', marginBottom: '1rem', fontWeight: 600 }}>
+            <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.75rem', letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '1rem', fontWeight: 600 }}>
               About Me
             </p>
-            <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: 'clamp(2.8rem, 5vw, 4rem)', fontWeight: 400, lineHeight: 1.1, color: '#1c1917', marginBottom: '2rem' }}>
+            <h1 style={{ fontFamily: 'Playfair Display, serif', fontSize: 'clamp(2.8rem, 5vw, 4rem)', fontWeight: 400, lineHeight: 1.1, color: 'var(--text-primary)', marginBottom: '2rem' }}>
               Quality is a<br /><em>strategy</em>, not<br />a checklist.
             </h1>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
@@ -20,7 +20,7 @@ export default function About() {
                 'Now based in New Zealand, I am focused on the next frontier: AI Quality Engineering — helping organisations test AI systems with the same rigour we apply to traditional software.',
                 'I work at the intersection of people leadership, technical depth, and AI literacy. I do not just manage test teams — I build quality cultures that scale.',
               ].map((p, i) => (
-                <p key={i} style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.92rem', color: '#78716c', lineHeight: 1.85, fontWeight: 300 }}>
+                <p key={i} style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.92rem', color: 'var(--text-muted)', lineHeight: 1.85, fontWeight: 300 }}>
                   {p}
                 </p>
               ))}
@@ -55,23 +55,23 @@ export default function About() {
                 display: 'flex',
                 gap: '1rem',
                 padding: '1.25rem',
-                backgroundColor: 'rgba(255,255,255,0.5)',
-                border: '1px solid rgba(255,255,255,0.8)',
+                backgroundColor: 'var(--glass-bg)',
+                border: '1px solid var(--glass-bd)',
                 borderRadius: '1rem',
                 backdropFilter: 'blur(16px)',
                 WebkitBackdropFilter: 'blur(16px)',
-                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.9), 0 1px 3px rgba(0,0,0,0.05)',
+                boxShadow: 'inset 0 1px 0 var(--glass-sh), 0 1px 3px var(--border-sm)',
               }}>
                 <div style={{
                   width: '2.5rem', height: '2.5rem', borderRadius: '0.6rem', flexShrink: 0,
-                  backgroundColor: 'rgba(184,74,10,0.07)', border: '1px solid rgba(184,74,10,0.15)',
+                  backgroundColor: 'var(--accent-icon-bg)', border: '1px solid var(--accent-icon-bd)',
                   display: 'flex', alignItems: 'center', justifyContent: 'center',
                 }}>
                   {card.icon}
                 </div>
                 <div>
-                  <h3 style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.88rem', fontWeight: 500, color: '#1c1917', marginBottom: '0.35rem' }}>{card.title}</h3>
-                  <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.8rem', color: '#78716c', lineHeight: 1.7, fontWeight: 300 }}>{card.desc}</p>
+                  <h3 style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.88rem', fontWeight: 500, color: 'var(--text-primary)', marginBottom: '0.35rem' }}>{card.title}</h3>
+                  <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.8rem', color: 'var(--text-muted)', lineHeight: 1.7, fontWeight: 300 }}>{card.desc}</p>
                 </div>
               </div>
             ))}

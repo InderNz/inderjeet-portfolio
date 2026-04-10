@@ -38,12 +38,12 @@ export default function Home() {
 
   const glassCard = {
     padding: '1.25rem',
-    backgroundColor: 'rgba(255,255,255,0.5)',
-    border: '1px solid rgba(255,255,255,0.8)',
+    backgroundColor: 'var(--glass-bg)',
+    border: '1px solid var(--glass-bd)',
     borderRadius: '1rem',
     backdropFilter: 'blur(16px)',
     WebkitBackdropFilter: 'blur(16px)',
-    boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.9), 0 1px 3px rgba(0,0,0,0.05)',
+    boxShadow: 'inset 0 1px 0 var(--glass-sh), 0 1px 3px var(--border-sm)',
   }
 
   const glassTag = {
@@ -51,12 +51,12 @@ export default function Home() {
     fontSize: '0.6rem',
     letterSpacing: '0.06em',
     padding: '0.35rem 0.8rem',
-    backgroundColor: 'rgba(255,255,255,0.55)',
-    border: '1px solid rgba(255,255,255,0.85)',
+    backgroundColor: 'var(--glass-bg-tag)',
+    border: '1px solid var(--glass-bd-tag)',
     borderRadius: '9999px',
-    color: '#4a4540',
+    color: 'var(--text-body)',
     backdropFilter: 'blur(8px)',
-    boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.9)',
+    boxShadow: 'inset 0 1px 0 var(--glass-sh)',
   }
 
   const sectionLabel = {
@@ -64,7 +64,7 @@ export default function Home() {
     fontSize: '0.75rem',
     letterSpacing: '0.06em',
     textTransform: 'uppercase',
-    color: '#b84a0a',
+    color: 'var(--accent)',
     marginBottom: '1rem',
     display: 'block',
     fontWeight: 600,
@@ -79,15 +79,15 @@ export default function Home() {
       textTransform: 'uppercase',
       padding: '0.2rem 0.65rem',
       borderRadius: '9999px',
-      backgroundColor: isTeal ? 'rgba(13,148,136,0.08)' : 'rgba(0,0,0,0.05)',
-      color: isTeal ? '#0d9488' : '#78716c',
-      border: isTeal ? '1px solid rgba(13,148,136,0.2)' : '1px solid rgba(0,0,0,0.1)',
+      backgroundColor: isTeal ? 'var(--teal-bg-xs)' : 'var(--border-sm)',
+      color: isTeal ? 'var(--teal)' : 'var(--text-muted)',
+      border: isTeal ? '1px solid var(--teal-bd)' : '1px solid rgba(0,0,0,0.1)',
     }
   }
 
 
   return (
-    <div style={{ backgroundColor: '#f0ede6', minHeight: '100vh', paddingTop: isMobile ? '5rem' : '7rem', overflowX: 'hidden' }}>
+    <div style={{ backgroundColor: 'var(--bg-page)', minHeight: '100vh', paddingTop: isMobile ? '5rem' : '7rem', overflowX: 'hidden' }}>
 
       {/* HERO */}
       <section id="home" style={{ maxWidth: '1100px', margin: '0 auto', padding: isMobile ? '2rem 1.25rem 2rem' : '0 3rem 3rem', minHeight: '100vh', boxSizing: 'border-box' }}>
@@ -100,7 +100,7 @@ export default function Home() {
               fontSize: '0.75rem',
               letterSpacing: '0.06em',
               textTransform: 'uppercase',
-              color: '#b84a0a',
+              color: 'var(--accent)',
               marginBottom: '2.5rem',
               fontWeight: 600,
             }}>
@@ -112,7 +112,7 @@ export default function Home() {
               fontSize: isMobile ? 'clamp(3rem, 12vw, 5rem)' : 'clamp(3.5rem, 8vw, 6.5rem)',
               fontWeight: 400,
               lineHeight: 0.95,
-              color: '#1c1917',
+              color: 'var(--text-primary)',
               marginBottom: '3rem',
               letterSpacing: '-0.02em',
             }}>
@@ -122,7 +122,7 @@ export default function Home() {
             <p style={{
               fontFamily: 'DM Sans, sans-serif',
               fontSize: '1rem',
-              color: '#5c5448',
+              color: 'var(--text-body-alt)',
               lineHeight: 1.7,
               fontWeight: 400,
               maxWidth: '560px',
@@ -140,7 +140,7 @@ export default function Home() {
                 flexShrink: 0,
                 boxShadow: '0 4px 12px rgba(0,0,0,0.12), 2px 4px 16px rgba(0,0,0,0.1)',
                 transform: 'perspective(600px) rotateY(-8deg) rotateX(2deg)',
-                border: '2px solid rgba(255,255,255,0.9)',
+                border: '2px solid var(--glass-sh)',
               }}>
                 <img
                   src={InderjeetPic}
@@ -153,7 +153,7 @@ export default function Home() {
                 fontSize: '0.6rem',
                 letterSpacing: '0.12em',
                 textTransform: 'uppercase',
-                color: '#b84a0a',
+                color: 'var(--accent)',
                 lineHeight: 1.8,
               }}>
                 Senior Test Manager / Test Architect<br />AI QA Specialist
@@ -175,40 +175,40 @@ export default function Home() {
                 <div key={i} style={{
                   display: 'flex', flexDirection: 'column', justifyContent: 'space-between',
                   padding: isMobile ? '0.85rem' : '1.5rem',
-                  backgroundColor: 'rgba(255,255,255,0.45)',
-                  border: '1px solid rgba(255,255,255,0.8)',
+                  backgroundColor: 'var(--glass-bg-sm)',
+                  border: '1px solid var(--glass-bd)',
                   borderRadius: '1rem',
                   backdropFilter: 'blur(16px)',
                   WebkitBackdropFilter: 'blur(16px)',
-                  boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.9), 0 1px 3px rgba(0,0,0,0.04)',
+                  boxShadow: 'inset 0 1px 0 var(--glass-sh), 0 1px 3px var(--border-xs)',
                   transition: 'box-shadow 0.2s, transform 0.2s',
                 }}
-                  onMouseEnter={e => { e.currentTarget.style.boxShadow = 'inset 0 1px 0 rgba(255,255,255,0.9), 0 4px 16px rgba(0,0,0,0.08)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
-                  onMouseLeave={e => { e.currentTarget.style.boxShadow = 'inset 0 1px 0 rgba(255,255,255,0.9), 0 1px 3px rgba(0,0,0,0.04)'; e.currentTarget.style.transform = 'translateY(0)' }}
+                  onMouseEnter={e => { e.currentTarget.style.boxShadow = 'inset 0 1px 0 var(--glass-sh), 0 4px 16px var(--border-md)'; e.currentTarget.style.transform = 'translateY(-1px)' }}
+                  onMouseLeave={e => { e.currentTarget.style.boxShadow = 'inset 0 1px 0 var(--glass-sh), 0 1px 3px var(--border-xs)'; e.currentTarget.style.transform = 'translateY(0)' }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.75rem' }}>
                     <span style={{
                       width: '1.4rem', height: '1.4rem', borderRadius: '0.35rem',
-                      backgroundColor: 'rgba(255,255,255,0.7)', border: '1px solid rgba(0,0,0,0.08)',
+                      backgroundColor: 'var(--glass-sh-sm)', border: '1px solid var(--border-md)',
                       display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-                      color: '#b84a0a',
+                      color: 'var(--accent)',
                     }}>
                       {stat.icon}
                     </span>
-                    <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.6rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#b84a0a', fontWeight: 500 }}>{stat.label}</span>
+                    <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.6rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--accent)', fontWeight: 500 }}>{stat.label}</span>
                   </div>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.4rem', marginBottom: '0.5rem' }}>
-                    <span style={{ fontFamily: 'Playfair Display, serif', fontSize: isMobile ? '1.8rem' : '1.4rem', fontWeight: 200, color: '#1c1917', lineHeight: 1 }}>{stat.value}</span>
-                    <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.65rem', color: '#b84a0a', fontWeight: 250 }}>{stat.unit}</span>
+                    <span style={{ fontFamily: 'Playfair Display, serif', fontSize: isMobile ? '1.8rem' : '1.4rem', fontWeight: 200, color: 'var(--text-primary)', lineHeight: 1 }}>{stat.value}</span>
+                    <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.65rem', color: 'var(--accent)', fontWeight: 250 }}>{stat.unit}</span>
                   </div>
-                  <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.78rem', color: '#4a4540', fontWeight: 400, lineHeight: 1.4 }}>{stat.sub}</p>
+                  <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.78rem', color: 'var(--text-body)', fontWeight: 400, lineHeight: 1.4 }}>{stat.sub}</p>
                 </div>
               ))}
             </div>
 
             {/* Know Me */}
             <div style={{ marginTop: '1.5rem' }}>
-              <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.58rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#b84a0a', marginBottom: '0.5rem' }}>
+              <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.58rem', letterSpacing: '0.08em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '0.5rem' }}>
                 Where to start
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.15rem' }}>
@@ -241,13 +241,13 @@ export default function Home() {
                 ].map((item, i) => (
                   <a key={i} href={item.to}
                     onClick={(e) => { e.preventDefault(); scrollTo(item.to) }}
-                    style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', color: '#3d3530' }}
+                    style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', color: 'var(--text-link)' }}
                   >
                     <span style={{
                       width: '1.4rem', height: '1.4rem', borderRadius: '0.35rem',
-                      backgroundColor: 'rgba(255,255,255,0.7)', border: '1px solid rgba(0,0,0,0.08)',
+                      backgroundColor: 'var(--glass-sh-sm)', border: '1px solid var(--border-md)',
                       display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-                      color: '#b84a0a',
+                      color: 'var(--accent)',
                     }}>
                       {item.icon}
                     </span>
@@ -263,12 +263,12 @@ export default function Home() {
       </section>
 
       {/* ABOUT */}
-      <section id="about" style={{ borderTop: '1px solid rgba(0,0,0,0.07)', backgroundColor: 'rgba(255,255,255,0.15)' }}>
+      <section id="about" style={{ borderTop: '1px solid var(--border)', backgroundColor: 'var(--bg-section)' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: isMobile ? '3rem 1.25rem' : '3.5rem 3rem' }}>
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '2rem' : '6rem', alignItems: 'start' }}>
             <div>
               <span style={sectionLabel}>About Me</span>
-              <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: isMobile ? 'clamp(2rem, 8vw, 3rem)' : 'clamp(2.4rem, 4vw, 3.2rem)', fontWeight: 400, lineHeight: 1.1, color: '#1c1917', marginBottom: '2rem' }}>
+              <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: isMobile ? 'clamp(2rem, 8vw, 3rem)' : 'clamp(2.4rem, 4vw, 3.2rem)', fontWeight: 400, lineHeight: 1.1, color: 'var(--text-primary)', marginBottom: '2rem' }}>
                 Building Quality <br /><em>Culture</em>, that<br />scales.
               </h2>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
@@ -278,7 +278,7 @@ export default function Home() {
                   'Now based in New Zealand, I am focused on AI Quality Engineering — helping organisations test AI systems with the same rigour we apply to traditional software.',
                   'I work at the intersection of people leadership, technical depth, and AI literacy. I do not just manage test teams, I build quality cultures that scale. For me Quality is a strategy, not just a checklist. ',
                 ].map((p, i) => (
-                  <p key={i} style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.9rem', color: '#4a4540', lineHeight: 1.85, fontWeight: 400 }}>{p}</p>
+                  <p key={i} style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.9rem', color: 'var(--text-body)', lineHeight: 1.85, fontWeight: 400 }}>{p}</p>
                 ))}
               </div>
             </div>
@@ -309,14 +309,14 @@ export default function Home() {
                   <div style={{ display: 'flex', gap: '1rem' }}>
                     <div style={{
                       width: '2.5rem', height: '2.5rem', borderRadius: '0.6rem', flexShrink: 0,
-                      backgroundColor: 'rgba(184,74,10,0.07)', border: '1px solid rgba(184,74,10,0.15)',
+                      backgroundColor: 'var(--accent-icon-bg)', border: '1px solid var(--accent-icon-bd)',
                       display: 'flex', alignItems: 'center', justifyContent: 'center',
                     }}>
                       {card.icon}
                     </div>
                     <div>
-                      <h3 style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.85rem', fontWeight: 500, color: '#1c1917', marginBottom: '0.3rem' }}>{card.title}</h3>
-                      <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.78rem', color: '#4a4540', lineHeight: 1.7, fontWeight: 400 }}>{card.desc}</p>
+                      <h3 style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.85rem', fontWeight: 500, color: 'var(--text-primary)', marginBottom: '0.3rem' }}>{card.title}</h3>
+                      <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.78rem', color: 'var(--text-body)', lineHeight: 1.7, fontWeight: 400 }}>{card.desc}</p>
                     </div>
                   </div>
                 </div>
@@ -327,13 +327,13 @@ export default function Home() {
       </section>
 
       {/* EXPERIENCE */}
-      <section id="experience" style={{ borderTop: '1px solid rgba(0,0,0,0.07)' }}>
+      <section id="experience" style={{ borderTop: '1px solid var(--border)' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: isMobile ? '3rem 1.25rem' : '3.5rem 3rem' }}>
           <span style={sectionLabel}>Career History</span>
-          <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: isMobile ? 'clamp(2rem, 8vw, 3rem)' : 'clamp(2.4rem, 4vw, 3.2rem)', fontWeight: 400, color: '#1c1917', marginBottom: '0.75rem', lineHeight: 1.1 }}>
+          <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: isMobile ? 'clamp(2rem, 8vw, 3rem)' : 'clamp(2.4rem, 4vw, 3.2rem)', fontWeight: 400, color: 'var(--text-primary)', marginBottom: '0.75rem', lineHeight: 1.1 }}>
             20+ Years of Delivery
           </h2>
-          <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.9rem', color: '#4a4540', fontWeight: 400, marginBottom: '3.5rem', lineHeight: 1.8 }}>
+          <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.9rem', color: 'var(--text-body)', fontWeight: 400, marginBottom: '3.5rem', lineHeight: 1.8 }}>
             18 years leading quality engineering across banking, fintech, and enterprise software in a consulting environment with earlier career experience bringing total industry experience to 20+ years.
           </p>
 
@@ -344,20 +344,20 @@ export default function Home() {
             <div style={{ display: 'flex', gap: '1.25rem' }}>
               {/* Logo + vertical line */}
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
-                <div style={{ width: '46px', height: '46px', borderRadius: '10px', backgroundColor: 'rgba(194,80,10,0.1)', border: '1px solid rgba(194,80,10,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'DM Mono, monospace', fontSize: '0.6rem', fontWeight: 700, color: '#b84a0a', letterSpacing: '0.04em', flexShrink: 0 }}>QCS</div>
-                <div style={{ width: '2px', flex: 1, background: 'linear-gradient(to bottom, rgba(194,80,10,0.2), rgba(194,80,10,0.08))', marginTop: '6px' }} />
+                <div style={{ width: '46px', height: '46px', borderRadius: '10px', backgroundColor: 'var(--accent-bg-md)', border: '1px solid var(--accent-bg-xl)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'DM Mono, monospace', fontSize: '0.6rem', fontWeight: 700, color: 'var(--accent)', letterSpacing: '0.04em', flexShrink: 0 }}>QCS</div>
+                <div style={{ width: '2px', flex: 1, background: 'linear-gradient(to bottom, var(--accent-bg-xl), var(--accent-bg-sm))', marginTop: '6px' }} />
               </div>
               {/* Content */}
               <div style={{ flex: 1, paddingBottom: '2rem' }}>
                 <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'flex-start', gap: '0.5rem', marginBottom: '0.15rem' }}>
                   <div>
-                    <h3 style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '1rem', fontWeight: 700, color: '#1c1917' }}>Senior Testing Manager</h3>
-                    <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.88rem', fontWeight: 500, color: '#44403c' }}>Quinnox Consultancy Services</p>
+                    <h3 style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)' }}>Senior Testing Manager</h3>
+                    <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.88rem', fontWeight: 500, color: 'var(--text-secondary)' }}>Quinnox Consultancy Services</p>
                   </div>
                   <span style={pill('teal')}>18 YEARS</span>
                 </div>
-                <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.78rem', color: '#a09880', fontWeight: 400, marginBottom: '0.65rem' }}>Jun 2006 – Mar 2024 · India · Global IT Services</p>
-                <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.84rem', color: '#4a4540', lineHeight: 1.75, fontWeight: 400, marginBottom: '1.5rem' }}>
+                <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.78rem', color: 'var(--text-meta)', fontWeight: 400, marginBottom: '0.65rem' }}>Jun 2006 – Mar 2024 · India · Global IT Services</p>
+                <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.84rem', color: 'var(--text-body)', lineHeight: 1.75, fontWeight: 400, marginBottom: '1.5rem' }}>
                   18 years contributing to Quinnox's Testing Practice — responsible for contributing to the practice, leading technical delivery of testing services, participating in business development, and ensuring successful execution of projects across banking, fintech, Retail and Manufactoring and other enterprise verticals.
                 </p>
 
@@ -370,14 +370,14 @@ export default function Home() {
                     'Participated in RFI/RFP processes, prepared technical documentation and conducted PoC demonstrations',
                     'Collaborated with sales teams to identify client testing needs, develop solutions and provide technical insights for sales strategies',
                   ].map((pt, j) => (
-                    <li key={j} style={{ display: 'flex', gap: '0.6rem', fontFamily: 'DM Sans, sans-serif', fontSize: '0.79rem', color: '#4a4540', lineHeight: 1.6, fontWeight: 400 }}>
-                      <span style={{ color: '#b84a0a', flexShrink: 0 }}>·</span>{pt}
+                    <li key={j} style={{ display: 'flex', gap: '0.6rem', fontFamily: 'DM Sans, sans-serif', fontSize: '0.79rem', color: 'var(--text-body)', lineHeight: 1.6, fontWeight: 400 }}>
+                      <span style={{ color: 'var(--accent)', flexShrink: 0 }}>·</span>{pt}
                     </li>
                   ))}
                 </ul>
 
                 {/* Client engagements label */}
-                <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.58rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#b5a990', marginBottom: '1rem' }}>Key Client Engagements</p>
+                <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.58rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--text-faint)', marginBottom: '1rem' }}>Key Client Engagements</p>
 
                 {/* Nested timeline */}
                 {[
@@ -405,18 +405,18 @@ export default function Home() {
                 ].map((c, i) => (
                   <div key={i} style={{ display: 'flex', gap: '1rem' }}>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
-                      <div style={{ width: '36px', height: '36px', borderRadius: '8px', backgroundColor: 'rgba(13,148,136,0.08)', border: '1px solid rgba(13,148,136,0.18)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'DM Mono, monospace', fontSize: '0.52rem', fontWeight: 700, color: '#0d9488' }}>{c.initials}</div>
-                      {!c.last && <div style={{ width: '2px', flex: 1, backgroundColor: 'rgba(13,148,136,0.12)', marginTop: '5px' }} />}
+                      <div style={{ width: '36px', height: '36px', borderRadius: '8px', backgroundColor: 'var(--teal-bg-xs)', border: '1px solid var(--teal-bg-lg)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'DM Mono, monospace', fontSize: '0.52rem', fontWeight: 700, color: 'var(--teal)' }}>{c.initials}</div>
+                      {!c.last && <div style={{ width: '2px', flex: 1, backgroundColor: 'var(--teal-bg-sm)', marginTop: '5px' }} />}
                     </div>
                     <div style={{ flex: 1, paddingBottom: c.last ? '0' : '1.5rem' }}>
-                      <h4 style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.9rem', fontWeight: 600, color: '#1c1917', marginBottom: '0.05rem' }}>{c.role}</h4>
-                      <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.85rem', fontWeight: 500, color: '#44403c', marginBottom: '0.2rem' }}>{c.name}</p>
-                      <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.75rem', color: '#a09880', fontWeight: 400, marginBottom: '0.6rem' }}>{c.period}</p>
-                      <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.81rem', color: '#4a4540', lineHeight: 1.7, fontWeight: 400, marginBottom: '0.5rem' }}>{c.desc}</p>
+                      <h4 style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.05rem' }}>{c.role}</h4>
+                      <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.85rem', fontWeight: 500, color: 'var(--text-secondary)', marginBottom: '0.2rem' }}>{c.name}</p>
+                      <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.75rem', color: 'var(--text-meta)', fontWeight: 400, marginBottom: '0.6rem' }}>{c.period}</p>
+                      <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.81rem', color: 'var(--text-body)', lineHeight: 1.7, fontWeight: 400, marginBottom: '0.5rem' }}>{c.desc}</p>
                       <ul style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
                         {c.points.map((pt, j) => (
-                          <li key={j} style={{ display: 'flex', gap: '0.6rem', fontFamily: 'DM Sans, sans-serif', fontSize: '0.79rem', color: '#4a4540', lineHeight: 1.6, fontWeight: 400 }}>
-                            <span style={{ color: '#b84a0a', flexShrink: 0 }}>·</span>{pt}
+                          <li key={j} style={{ display: 'flex', gap: '0.6rem', fontFamily: 'DM Sans, sans-serif', fontSize: '0.79rem', color: 'var(--text-body)', lineHeight: 1.6, fontWeight: 400 }}>
+                            <span style={{ color: 'var(--accent)', flexShrink: 0 }}>·</span>{pt}
                           </li>
                         ))}
                       </ul>
@@ -429,14 +429,14 @@ export default function Home() {
             {/* ── Earlier Career ── */}
             <div style={{ display: 'flex', gap: '1.25rem' }}>
               <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', flexShrink: 0 }}>
-                <div style={{ width: '46px', height: '46px', borderRadius: '10px', backgroundColor: 'rgba(194,80,10,0.1)', border: '1px solid rgba(194,80,10,0.2)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'DM Mono, monospace', fontSize: '0.6rem', fontWeight: 700, color: '#b84a0a' }}>EC</div>
-                <div style={{ width: '2px', flex: 1, background: 'linear-gradient(to bottom, rgba(194,80,10,0.15), transparent)', marginTop: '6px' }} />
+                <div style={{ width: '46px', height: '46px', borderRadius: '10px', backgroundColor: 'var(--accent-bg-md)', border: '1px solid var(--accent-bg-xl)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'DM Mono, monospace', fontSize: '0.6rem', fontWeight: 700, color: 'var(--accent)' }}>EC</div>
+                <div style={{ width: '2px', flex: 1, background: 'linear-gradient(to bottom, var(--accent-bg-lg), transparent)', marginTop: '6px' }} />
               </div>
               <div style={{ flex: 1, paddingBottom: '2rem' }}>
-                <h3 style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '1rem', fontWeight: 700, color: '#1c1917', marginBottom: '0.05rem' }}>Earlier Career — Test Analyst</h3>
-                <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.88rem', fontWeight: 500, color: '#44403c', marginBottom: '0.2rem' }}>Intel Technologies India Ltd · Netcradle India</p>
-                <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.78rem', color: '#a09880', fontWeight: 400, marginBottom: '0.65rem' }}>2003 – 2006 · India</p>
-                <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.84rem', color: '#4a4540', lineHeight: 1.75, fontWeight: 400 }}>
+                <h3 style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '1rem', fontWeight: 700, color: 'var(--text-primary)', marginBottom: '0.05rem' }}>Earlier Career — Test Analyst</h3>
+                <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.88rem', fontWeight: 500, color: 'var(--text-secondary)', marginBottom: '0.2rem' }}>Intel Technologies India Ltd · Netcradle India</p>
+                <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.78rem', color: 'var(--text-meta)', fontWeight: 400, marginBottom: '0.65rem' }}>2003 – 2006 · India</p>
+                <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.84rem', color: 'var(--text-body)', lineHeight: 1.75, fontWeight: 400 }}>
                   Began career as a Test Analyst at Intel Technologies India Ltd and Netcradle India — building foundational skills in software testing, defect management, and quality assurance processes. These earlier roles, combined with 18 years at Quinnox, bring total industry experience to 20+ years.
                 </p>
               </div>
@@ -445,19 +445,19 @@ export default function Home() {
           </div>
 
           {/* Education */}
-          <div style={{ marginTop: '2.5rem', paddingTop: '2rem', borderTop: '1px solid rgba(0,0,0,0.06)' }}>
-            <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.58rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: '#b84a0a', marginBottom: '0.75rem' }}>Education</p>
+          <div style={{ marginTop: '2.5rem', paddingTop: '2rem', borderTop: '1px solid var(--border-xs2)' }}>
+            <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.58rem', letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '0.75rem' }}>Education</p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '0.45rem' }}>
               {[
                 { name: 'Master of Software Systems (MSS)', body: 'Kurukshetra University, India', level: 'Postgraduate' },
                 { name: 'Post Graduate Diploma in Computer Applications', body: 'Kurukshetra University, India', level: 'Undergraduate' },
               ].map((edu, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', padding: '0.55rem 1rem', backgroundColor: 'rgba(255,255,255,0.5)', border: '1px solid rgba(255,255,255,0.8)', borderRadius: '9999px', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.9)' }}>
+                <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '1rem', padding: '0.55rem 1rem', backgroundColor: 'var(--glass-bg)', border: '1px solid var(--glass-bd)', borderRadius: '9999px', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', boxShadow: 'inset 0 1px 0 var(--glass-sh)' }}>
                   <div>
-                    <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.8rem', fontWeight: 500, color: '#1c1917' }}>{edu.name}</p>
-                    <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.55rem', color: '#b5a990', letterSpacing: '0.08em', marginTop: '0.1rem' }}>{edu.body}</p>
+                    <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.8rem', fontWeight: 500, color: 'var(--text-primary)' }}>{edu.name}</p>
+                    <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.55rem', color: 'var(--text-faint)', letterSpacing: '0.08em', marginTop: '0.1rem' }}>{edu.body}</p>
                   </div>
-                  <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.52rem', letterSpacing: '0.08em', textTransform: 'uppercase', padding: '0.2rem 0.6rem', borderRadius: '9999px', flexShrink: 0, backgroundColor: 'rgba(13,148,136,0.08)', color: '#0d9488', border: '1px solid rgba(13,148,136,0.2)' }}>
+                  <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.52rem', letterSpacing: '0.08em', textTransform: 'uppercase', padding: '0.2rem 0.6rem', borderRadius: '9999px', flexShrink: 0, backgroundColor: 'var(--teal-bg-xs)', color: 'var(--teal)', border: '1px solid var(--teal-bd)' }}>
                     {edu.level}
                   </span>
                 </div>
@@ -468,15 +468,15 @@ export default function Home() {
       </section>
 
       {/* SKILLS */}
-      <section id="skills" style={{ borderTop: '1px solid rgba(0,0,0,0.07)', backgroundColor: 'rgba(255,255,255,0.15)', minHeight: '100vh', boxSizing: 'border-box' }}>
+      <section id="skills" style={{ borderTop: '1px solid var(--border)', backgroundColor: 'var(--bg-section)', minHeight: '100vh', boxSizing: 'border-box' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: isMobile ? '3rem 1.25rem' : '3.5rem 3rem' }}>
           <span style={sectionLabel}>Expertise</span>
-          <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: 'clamp(2rem, 3.5vw, 2.6rem)', fontWeight: 400, color: '#1c1917', marginBottom: '1.75rem', lineHeight: 1.1 }}>
+          <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: 'clamp(2rem, 3.5vw, 2.6rem)', fontWeight: 400, color: 'var(--text-primary)', marginBottom: '1.75rem', lineHeight: 1.1 }}>
             Skills & Certifications
           </h2>
 
           {/* Skills — Two-column table layout */}
-          <div style={{ backgroundColor: 'rgba(255,255,255,0.5)', border: '1px solid rgba(255,255,255,0.8)', borderRadius: '1rem', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', overflow: 'hidden', marginBottom: '2.5rem' }}>
+          <div style={{ backgroundColor: 'var(--glass-bg)', border: '1px solid var(--glass-bd)', borderRadius: '1rem', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', overflow: 'hidden', marginBottom: '2.5rem' }}>
             {[
               {
                 icon: <svg width="20" height="20" fill="none" stroke="#b84a0a" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>,
@@ -556,18 +556,18 @@ export default function Home() {
                 ],
               },
             ].map((row, i, arr) => (
-              <div key={i} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'flex-start', padding: '1.1rem 1.75rem', borderBottom: i < arr.length - 1 ? '1px solid rgba(0,0,0,0.05)' : 'none' }}>
+              <div key={i} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'flex-start', padding: '1.1rem 1.75rem', borderBottom: i < arr.length - 1 ? '1px solid var(--border-sm)' : 'none' }}>
                 {/* Left column */}
                 <div style={{ width: isMobile ? '100%' : '220px', flexShrink: 0, paddingRight: isMobile ? '0' : '2rem', marginBottom: isMobile ? '0.75rem' : '0' }}>
                   <span style={{ display: 'inline-block', marginBottom: '0.3rem' }}>{row.icon}</span>
-                  <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.88rem', fontWeight: 600, color: '#1c1917', lineHeight: 1.4 }}>{row.title}</p>
+                  <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.4 }}>{row.title}</p>
                 </div>
                 {/* Right column */}
                 <ul style={{ flex: 1, listStyle: 'none', padding: 0, margin: 0, width: isMobile ? '100%' : 'auto' }}>
                   {row.bullets.map((pt, j) => (
                     <li key={j} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', marginBottom: '0.3rem' }}>
-                      <span style={{ color: '#b84a0a', fontSize: '0.75rem', marginTop: '0.2rem', flexShrink: 0 }}>→</span>
-                      <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.88rem', color: '#4a4540', fontWeight: 400, lineHeight: 1.5 }}>{pt}</span>
+                      <span style={{ color: 'var(--accent)', fontSize: '0.75rem', marginTop: '0.2rem', flexShrink: 0 }}>→</span>
+                      <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.88rem', color: 'var(--text-body)', fontWeight: 400, lineHeight: 1.5 }}>{pt}</span>
                     </li>
                   ))}
                 </ul>
@@ -588,12 +588,12 @@ export default function Home() {
               { name: 'ISTQB CT-AI', body: 'AI Testing Specialist', status: 'progress' },
               { name: 'Azure AI-900', body: 'Microsoft', status: 'progress' },
             ].map((cert, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem', padding: '0.5rem 1rem', backgroundColor: 'rgba(255,255,255,0.5)', border: '1px solid rgba(255,255,255,0.8)', borderRadius: '9999px', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.9)' }}>
+              <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem', padding: '0.5rem 1rem', backgroundColor: 'var(--glass-bg)', border: '1px solid var(--glass-bd)', borderRadius: '9999px', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', boxShadow: 'inset 0 1px 0 var(--glass-sh)' }}>
                 <div>
-                  <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.75rem', fontWeight: 500, color: '#1c1917' }}>{cert.name}</p>
-                  <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.52rem', color: '#b5a990', letterSpacing: '0.06em' }}>{cert.body}</p>
+                  <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.75rem', fontWeight: 500, color: 'var(--text-primary)' }}>{cert.name}</p>
+                  <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.52rem', color: 'var(--text-faint)', letterSpacing: '0.06em' }}>{cert.body}</p>
                 </div>
-                <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.52rem', letterSpacing: '0.08em', textTransform: 'uppercase', padding: '0.2rem 0.6rem', borderRadius: '9999px', flexShrink: 0, backgroundColor: cert.status === 'active' ? 'rgba(13,148,136,0.08)' : 'rgba(194,80,10,0.08)', color: cert.status === 'active' ? '#0d9488' : '#b84a0a', border: cert.status === 'active' ? '1px solid rgba(13,148,136,0.2)' : '1px solid rgba(194,80,10,0.2)' }}>
+                <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.52rem', letterSpacing: '0.08em', textTransform: 'uppercase', padding: '0.2rem 0.6rem', borderRadius: '9999px', flexShrink: 0, backgroundColor: cert.status === 'active' ? 'var(--teal-bg-xs)' : 'var(--accent-bg-sm)', color: cert.status === 'active' ? 'var(--teal)' : 'var(--accent)', border: cert.status === 'active' ? '1px solid var(--teal-bd)' : '1px solid var(--accent-bg-xl)' }}>
                   {cert.status === 'active' ? 'Active' : 'In Progress'}
                 </span>
               </div>
@@ -603,17 +603,17 @@ export default function Home() {
       </section>
 
       {/* AI SPECIALISATION */}
-      <section id="current-focus" style={{ borderTop: '1px solid rgba(0,0,0,0.07)', boxSizing: 'border-box', minHeight: '100vh' }}>
+      <section id="current-focus" style={{ borderTop: '1px solid var(--border)', boxSizing: 'border-box', minHeight: '100vh' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: isMobile ? '3rem 1.25rem' : '6rem 3rem' }}>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
             <span style={sectionLabel}>Current Focus</span>
-            <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: isMobile ? 'clamp(2rem, 8vw, 3rem)' : '2.6rem', fontWeight: 400, color: '#1c1917', lineHeight: 1.2, marginBottom: '0' }}>
+            <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: isMobile ? 'clamp(2rem, 8vw, 3rem)' : '2.6rem', fontWeight: 400, color: 'var(--text-primary)', lineHeight: 1.2, marginBottom: '0' }}>
               Specialising in AI Quality Engineering
             </h2>
-            <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.92rem', color: '#5c5448', lineHeight: 1.85, fontWeight: 400, maxWidth: '700px' }}>
+            <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.92rem', color: 'var(--text-body-alt)', lineHeight: 1.85, fontWeight: 400, maxWidth: '700px' }}>
               As AI systems become central to how products work, the need for experienced testers who understand probabilistic outputs, model drift, and responsible AI governance has never been greater. That is the lane I am building in.
             </p>
-            <a href="#skills" onClick={(e) => { e.preventDefault(); scrollTo('#skills') }} style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.82rem', color: '#b84a0a', textDecoration: 'none', fontWeight: 400 }}>
+            <a href="#skills" onClick={(e) => { e.preventDefault(); scrollTo('#skills') }} style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.82rem', color: 'var(--accent)', textDecoration: 'none', fontWeight: 400 }}>
               See my skills →
             </a>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
@@ -631,15 +631,15 @@ export default function Home() {
       </section>
 
       {/* CONTACT */}
-      <section id="contact" style={{ borderTop: '1px solid rgba(0,0,0,0.07)' }}>
+      <section id="contact" style={{ borderTop: '1px solid var(--border)' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: isMobile ? '3rem 1.25rem 4rem' : '3.5rem 3rem 8rem' }}>
           <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: isMobile ? '2rem' : '6rem', alignItems: 'start' }}>
             <div>
               <span style={sectionLabel}>Get in Touch</span>
-              <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: isMobile ? 'clamp(2rem, 8vw, 3rem)' : 'clamp(2.4rem, 4vw, 3.2rem)', fontWeight: 400, lineHeight: 1.1, color: '#1c1917', marginBottom: '1.5rem' }}>
+              <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: isMobile ? 'clamp(2rem, 8vw, 3rem)' : 'clamp(2.4rem, 4vw, 3.2rem)', fontWeight: 400, lineHeight: 1.1, color: 'var(--text-primary)', marginBottom: '1.5rem' }}>
                 Let's work<br />together.
               </h2>
-              <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.92rem', color: '#4a4540', lineHeight: 1.85, fontWeight: 400, marginBottom: '2.5rem', maxWidth: '380px' }}>
+              <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.92rem', color: 'var(--text-body)', lineHeight: 1.85, fontWeight: 400, marginBottom: '2.5rem', maxWidth: '380px' }}>
                 I am actively seeking senior QA, Test Management, or AI Quality Engineering roles in Palmerston North and across New Zealand.
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
@@ -648,13 +648,13 @@ export default function Home() {
                   { label: 'LinkedIn', value: 'linkedin.com/in/inderjeet-singh-24485b32', href: 'https://www.linkedin.com/in/inderjeet-singh-24485b32/', icon: '💼' },
                   { label: 'Location', value: 'Palmerston North, New Zealand', href: null, icon: '📍' },
                 ].map((item, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', padding: '0.85rem 1.1rem', backgroundColor: 'rgba(255,255,255,0.5)', border: '1px solid rgba(255,255,255,0.8)', borderRadius: '9999px', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.9)' }}>
+                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', padding: '0.85rem 1.1rem', backgroundColor: 'var(--glass-bg)', border: '1px solid var(--glass-bd)', borderRadius: '9999px', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', boxShadow: 'inset 0 1px 0 var(--glass-sh)' }}>
                     <span style={{ fontSize: '0.85rem' }}>{item.icon}</span>
                     <div style={{ flex: 1 }}>
-                      <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.52rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#b5a990', marginBottom: '0.1rem' }}>{item.label}</p>
+                      <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.52rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--text-faint)', marginBottom: '0.1rem' }}>{item.label}</p>
                       {item.href
-                        ? <a href={item.href} target="_blank" rel="noreferrer" style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.82rem', color: '#1c1917', textDecoration: 'none' }}>{item.value}</a>
-                        : <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.82rem', color: '#1c1917' }}>{item.value}</p>
+                        ? <a href={item.href} target="_blank" rel="noreferrer" style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.82rem', color: 'var(--text-primary)', textDecoration: 'none' }}>{item.value}</a>
+                        : <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.82rem', color: 'var(--text-primary)' }}>{item.value}</p>
                       }
                     </div>
                   </div>
@@ -672,14 +672,14 @@ export default function Home() {
                   { title: 'QA Consultant / Advisor', desc: 'Strategic testing advice for NZ companies integrating AI into their products.' },
                 ].map((role, i) => (
                   <div key={i} style={glassCard}>
-                    <h3 style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.85rem', fontWeight: 500, color: '#1c1917', marginBottom: '0.25rem' }}>{role.title}</h3>
-                    <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.78rem', color: '#4a4540', fontWeight: 400, lineHeight: 1.6 }}>{role.desc}</p>
+                    <h3 style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.85rem', fontWeight: 500, color: 'var(--text-primary)', marginBottom: '0.25rem' }}>{role.title}</h3>
+                    <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.78rem', color: 'var(--text-body)', fontWeight: 400, lineHeight: 1.6 }}>{role.desc}</p>
                   </div>
                 ))}
               </div>
-              <div style={{ padding: '1.25rem', backgroundColor: 'rgba(194,80,10,0.06)', border: '1px solid rgba(194,80,10,0.15)', borderRadius: '1rem' }}>
-                <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.58rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#b84a0a', marginBottom: '0.4rem' }}>Availability</p>
-                <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.83rem', color: '#4a4540', fontWeight: 400, lineHeight: 1.7 }}>
+              <div style={{ padding: '1.25rem', backgroundColor: 'var(--accent-bg-xs)', border: '1px solid var(--accent-bg-lg)', borderRadius: '1rem' }}>
+                <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.58rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--accent)', marginBottom: '0.4rem' }}>Availability</p>
+                <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.83rem', color: 'var(--text-body)', fontWeight: 400, lineHeight: 1.7 }}>
                   Available for immediate start. Open to permanent, contract, and consulting roles across New Zealand including remote positions.
                 </p>
               </div>
@@ -689,8 +689,8 @@ export default function Home() {
       </section>
 
       {/* FOOTER */}
-      <footer style={{ borderTop: '1px solid rgba(0,0,0,0.07)', padding: isMobile ? '2rem 1.25rem' : '2rem 3rem', textAlign: 'center' }}>
-        <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.58rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: '#b5a990' }}>
+      <footer style={{ borderTop: '1px solid var(--border)', padding: isMobile ? '2rem 1.25rem' : '2rem 3rem', textAlign: 'center' }}>
+        <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.58rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
           © 2025 Inderjeet Singh · Palmerston North, New Zealand · AI Quality Engineering
         </p>
       </footer>
