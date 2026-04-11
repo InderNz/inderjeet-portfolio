@@ -1,10 +1,6 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
-import About from './pages/About'
-import Experience from './pages/Experience'
-import Skills from './pages/Skills'
-import Contact from './pages/Contact'
 
 function App() {
   return (
@@ -15,10 +11,10 @@ function App() {
         <main id="main-content">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/experience" element={<Experience />} />
-            <Route path="/skills" element={<Skills />} />
-            <Route path="/contact" element={<Contact />} />
+            <Route path="/about" element={<Navigate to="/#about" replace />} />
+            <Route path="/experience" element={<Navigate to="/#experience" replace />} />
+            <Route path="/skills" element={<Navigate to="/#skills" replace />} />
+            <Route path="/contact" element={<Navigate to="/#contact" replace />} />
           </Routes>
         </main>
       </div>

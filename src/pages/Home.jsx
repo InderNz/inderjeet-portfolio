@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import emailjs from '@emailjs/browser'
 import InderjeetPic from '../assets/Inderjeet.jpeg'
 
 const SkillIcons = {
@@ -30,6 +31,72 @@ export default function Home() {
     window.addEventListener('resize', handler)
     return () => window.removeEventListener('resize', handler)
   }, [])
+
+  const [hoveredLink, setHoveredLink] = useState(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const [formData, setFormData] = useState({ name: '', email: '', company: '', message: '' })
+  const [submitted, setSubmitted] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [errors, setErrors] = useState({})
+
+  const handleFormChange = (e) => {
+    const { name, value } = e.target
+    setFormData(prev => ({ ...prev, [name]: value }))
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: null }))
+    }
+  }
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault()
+    const newErrors = {}
+    if (!formData.name || formData.name.trim().length < 2) {
+      newErrors.name = 'Please enter your full name'
+    }
+    if (!formData.email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) {
+      newErrors.email = 'Please enter a valid email address'
+    }
+    if (!formData.message || formData.message.trim().length < 10) {
+      newErrors.message = 'Please enter a message of at least 10 characters'
+    }
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors)
+      return
+    }
+    setIsSubmitting(true)
+    try {
+      await emailjs.send(
+        'service_pmdmyv9',
+        'template_h4uu4nn',
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          company: formData.company || 'Not provided',
+          message: formData.message,
+          to_email: 'nz.inderjeet@gmail.com',
+        },
+        'lDrpITvfDZ_6SCzm6'
+      )
+      setSubmitted(true)
+      setTimeout(() => {
+        setIsModalOpen(false)
+        setSubmitted(false)
+        setFormData({ name: '', email: '', company: '', message: '' })
+        setErrors({})
+      }, 3000)
+    } catch (error) {
+      setErrors({ submit: 'Something went wrong. Please email me directly at nz.inderjeet@gmail.com' })
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
+
+  const closeModal = () => {
+    setIsModalOpen(false)
+    setSubmitted(false)
+    setFormData({ name: '', email: '', company: '', message: '' })
+    setErrors({})
+  }
 
   const scrollTo = (id) => {
     document.querySelector(id)?.scrollIntoView({ behavior: 'smooth' })
@@ -241,19 +308,30 @@ export default function Home() {
                 ].map((item, i) => (
                   <a key={i} href={item.to}
                     onClick={(e) => { e.preventDefault(); scrollTo(item.to) }}
-                    style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', textDecoration: 'none', color: 'var(--text-link)' }}
+                    onMouseEnter={() => setHoveredLink(i)}
+                    onMouseLeave={() => setHoveredLink(null)}
+                    style={{
+                      display: 'flex', alignItems: 'center', gap: '0.5rem',
+                      textDecoration: 'none',
+                      color: hoveredLink === i ? '#b84a0a' : '#5c5448',
+                      transform: hoveredLink === i ? 'translateX(4px)' : 'translateX(0)',
+                      transition: 'all 0.2s ease',
+                    }}
                   >
                     <span style={{
                       width: '1.4rem', height: '1.4rem', borderRadius: '0.35rem',
-                      backgroundColor: 'var(--glass-sh-sm)', border: '1px solid var(--border-md)',
+                      backgroundColor: hoveredLink === i ? 'rgba(184,74,10,0.08)' : 'rgba(255,255,255,0.55)',
+                      border: hoveredLink === i ? '1px solid rgba(184,74,10,0.25)' : '1px solid rgba(0,0,0,0.07)',
                       display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
-                      color: 'var(--accent)',
+                      color: hoveredLink === i ? '#b84a0a' : 'var(--accent)',
+                      transition: 'all 0.2s ease',
                     }}>
                       {item.icon}
                     </span>
-                    <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.78rem', fontWeight: 400 }}>
+                    <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.78rem', fontWeight: 400, flex: 1 }}>
                       {item.label}
                     </span>
+                    <span style={{ color: '#b84a0a', opacity: hoveredLink === i ? 1 : 0, transition: 'opacity 0.2s ease', fontSize: '0.75rem' }}>→</span>
                   </a>
                 ))}
               </div>
@@ -644,21 +722,74 @@ export default function Home() {
               </p>
               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
                 {[
-                  { label: 'Email', value: 'nz.inderjeet@gmail.com', href: 'mailto:nz.inderjeet@gmail.com', icon: '✉️' },
-                  { label: 'LinkedIn', value: 'linkedin.com/in/inderjeet-singh-24485b32', href: 'https://www.linkedin.com/in/inderjeet-singh-24485b32/', icon: '💼' },
-                  { label: 'Location', value: 'Palmerston North, New Zealand', href: null, icon: '📍' },
-                ].map((item, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', padding: '0.85rem 1.1rem', backgroundColor: 'var(--glass-bg)', border: '1px solid var(--glass-bd)', borderRadius: '9999px', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', boxShadow: 'inset 0 1px 0 var(--glass-sh)' }}>
-                    <span style={{ fontSize: '0.85rem' }}>{item.icon}</span>
-                    <div style={{ flex: 1 }}>
-                      <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.52rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--text-faint)', marginBottom: '0.1rem' }}>{item.label}</p>
-                      {item.href
-                        ? <a href={item.href} target="_blank" rel="noreferrer" style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.82rem', color: 'var(--text-primary)', textDecoration: 'none' }}>{item.value}</a>
-                        : <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.82rem', color: 'var(--text-primary)' }}>{item.value}</p>
-                      }
-                    </div>
+                  {
+                    label: 'Email',
+                    value: 'nz.inderjeet@gmail.com',
+                    href: 'mailto:nz.inderjeet@gmail.com',
+                    icon: (
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+                      </svg>
+                    ),
+                  },
+                  {
+                    label: 'LinkedIn',
+                    value: 'linkedin.com/in/inderjeet-singh-24485b32',
+                    href: 'https://www.linkedin.com/in/inderjeet-singh-24485b32/',
+                    icon: (
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                      </svg>
+                    ),
+                  },
+                  {
+                    label: 'Location',
+                    value: 'Palmerston North, New Zealand',
+                    href: null,
+                    icon: (
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z" />
+                      </svg>
+                    ),
+                  },
+                ].map((item, i) => {
+                  const Tag = item.href ? 'a' : 'div'
+                  const linkProps = item.href ? { href: item.href, target: item.href.startsWith('http') ? '_blank' : undefined, rel: item.href.startsWith('http') ? 'noreferrer' : undefined } : {}
+                  return (
+                    <Tag
+                      key={i}
+                      {...linkProps}
+                      style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', padding: '0.85rem 1.1rem', backgroundColor: 'var(--glass-bg)', border: '1px solid var(--glass-bd)', borderRadius: '9999px', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', boxShadow: 'inset 0 1px 0 var(--glass-sh)', textDecoration: 'none', color: 'inherit', cursor: item.href ? 'pointer' : 'default', transition: 'border-color 0.2s' }}
+                      onMouseEnter={e => e.currentTarget.style.borderColor = '#b84a0a'}
+                      onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--glass-bd)'}
+                    >
+                      <span style={{ color: 'var(--accent)', display: 'flex', alignItems: 'center', flexShrink: 0 }}>{item.icon}</span>
+                      <div style={{ flex: 1 }}>
+                        <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.52rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--text-faint)', marginBottom: '0.1rem' }}>{item.label}</p>
+                        <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.82rem', color: 'var(--text-primary)' }}>{item.value}</p>
+                      </div>
+                    </Tag>
+                  )
+                })}
+
+                {/* Send Message capsule */}
+                <div
+                  onClick={() => setIsModalOpen(true)}
+                  style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', padding: '0.85rem 1.1rem', backgroundColor: 'var(--glass-bg)', border: '1px solid var(--glass-bd)', borderRadius: '9999px', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', boxShadow: 'inset 0 1px 0 var(--glass-sh)', cursor: 'pointer', transition: 'border-color 0.2s' }}
+                  onMouseEnter={e => e.currentTarget.style.borderColor = '#b84a0a'}
+                  onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--glass-bd)'}
+                >
+                  <span style={{ color: 'var(--accent)', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 12L3.269 3.126A59.768 59.768 0 0121.485 12 59.77 59.77 0 013.27 20.876L5.999 12zm0 0h7.5" />
+                    </svg>
+                  </span>
+                  <div style={{ flex: 1 }}>
+                    <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.52rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--text-faint)', marginBottom: '0.1rem' }}>Send Message</p>
+                    <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.82rem', color: 'var(--text-primary)' }}>Send me a direct message</p>
                   </div>
-                ))}
+                </div>
               </div>
             </div>
 
@@ -691,9 +822,89 @@ export default function Home() {
       {/* FOOTER */}
       <footer style={{ borderTop: '1px solid var(--border)', padding: isMobile ? '2rem 1.25rem' : '2rem 3rem', textAlign: 'center' }}>
         <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.58rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--text-faint)' }}>
-          © 2025 Inderjeet Singh · Palmerston North, New Zealand · AI Quality Engineering
+          © 2026 Inderjeet Singh · Palmerston North, New Zealand · AI Quality Engineering
         </p>
       </footer>
+
+      {/* Send Message Modal */}
+      {isModalOpen && (
+        <div
+          onClick={closeModal}
+          style={{ position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 1000, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '1rem' }}
+        >
+          <div
+            onClick={e => e.stopPropagation()}
+            style={{ backgroundColor: '#f5f2ec', borderRadius: '1.25rem', padding: isMobile ? '1.75rem' : '2.5rem', width: '100%', maxWidth: '520px', position: 'relative', margin: isMobile ? '1rem' : '0' }}
+          >
+            {/* Close button */}
+            <button
+              onClick={closeModal}
+              style={{ position: 'absolute', top: '1rem', right: '1.25rem', background: 'none', border: 'none', fontSize: '1.5rem', color: '#b5a990', cursor: 'pointer', lineHeight: 1 }}
+              aria-label="Close"
+            >×</button>
+
+            {submitted ? (
+              <div style={{ textAlign: 'center', padding: '2rem 0' }}>
+                <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>✅</div>
+                <p style={{ fontFamily: 'Playfair Display, serif', fontSize: '1.4rem', fontWeight: 400, color: '#1c1917' }}>Message sent! I'll be in touch soon.</p>
+              </div>
+            ) : (
+              <>
+                <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: '1.8rem', fontWeight: 400, color: '#1c1917', marginBottom: '0.5rem' }}>Send a Message</h2>
+                <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.85rem', color: '#78716c', marginBottom: '1.75rem' }}>I'll get back to you within 24 hours.</p>
+
+                <form onSubmit={handleFormSubmit} noValidate>
+                  {[
+                    { name: 'name', label: 'Your Name', placeholder: 'Your Full Name', type: 'text', required: true },
+                    { name: 'email', label: 'Your Email', placeholder: 'you@company.com', type: 'email', required: true },
+                    { name: 'company', label: 'Company (optional)', placeholder: 'Company Ltd', type: 'text', required: false },
+                  ].map(field => (
+                    <div key={field.name} style={{ marginBottom: '1rem' }}>
+                      <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.62rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#b5a990', marginBottom: '0.4rem' }}>{field.label}</p>
+                      <input
+                        name={field.name}
+                        type={field.type}
+                        placeholder={field.placeholder}
+                        value={formData[field.name]}
+                        onChange={handleFormChange}
+                        required={field.required}
+                        style={{ width: '100%', padding: '0.75rem 1rem', backgroundColor: 'rgba(255,255,255,0.7)', border: errors[field.name] ? '1px solid #c0392b' : '1px solid rgba(0,0,0,0.1)', borderRadius: '0.6rem', fontFamily: 'DM Sans, sans-serif', fontSize: '0.9rem', color: '#1c1917', outline: 'none', boxSizing: 'border-box' }}
+                        onFocus={e => { if (!errors[field.name]) e.target.style.border = '1px solid #b84a0a' }}
+                        onBlur={e => { if (!errors[field.name]) e.target.style.border = '1px solid rgba(0,0,0,0.1)' }}
+                      />
+                      {errors[field.name] && <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.75rem', color: '#c0392b', marginTop: '0.3rem' }}>{errors[field.name]}</p>}
+                    </div>
+                  ))}
+                  <div style={{ marginBottom: '1rem' }}>
+                    <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.62rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#b5a990', marginBottom: '0.4rem' }}>Message</p>
+                    <textarea
+                      name="message"
+                      placeholder="Tell me about the role or opportunity..."
+                      value={formData.message}
+                      onChange={handleFormChange}
+                      required
+                      style={{ width: '100%', height: '120px', padding: '0.75rem 1rem', backgroundColor: 'rgba(255,255,255,0.7)', border: errors.message ? '1px solid #c0392b' : '1px solid rgba(0,0,0,0.1)', borderRadius: '0.6rem', fontFamily: 'DM Sans, sans-serif', fontSize: '0.9rem', color: '#1c1917', outline: 'none', resize: 'vertical', boxSizing: 'border-box' }}
+                      onFocus={e => { if (!errors.message) e.target.style.border = '1px solid #b84a0a' }}
+                      onBlur={e => { if (!errors.message) e.target.style.border = '1px solid rgba(0,0,0,0.1)' }}
+                    />
+                    {errors.message && <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.75rem', color: '#c0392b', marginTop: '0.3rem' }}>{errors.message}</p>}
+                  </div>
+                  {errors.submit && <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.8rem', color: '#c0392b', textAlign: 'center', marginBottom: '0.75rem' }}>{errors.submit}</p>}
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    style={{ width: '100%', padding: '0.85rem', backgroundColor: '#b84a0a', color: '#ffffff', borderRadius: '0.6rem', fontFamily: 'DM Sans, sans-serif', fontSize: '0.9rem', fontWeight: 500, border: 'none', cursor: isSubmitting ? 'not-allowed' : 'pointer', opacity: isSubmitting ? 0.7 : 1, transition: 'background-color 0.2s' }}
+                    onMouseEnter={e => { if (!isSubmitting) e.currentTarget.style.backgroundColor = '#9a3d08' }}
+                    onMouseLeave={e => { if (!isSubmitting) e.currentTarget.style.backgroundColor = '#b84a0a' }}
+                  >
+                    {isSubmitting ? 'Sending...' : 'Send Message'}
+                  </button>
+                </form>
+              </>
+            )}
+          </div>
+        </div>
+      )}
 
     </div>
   )

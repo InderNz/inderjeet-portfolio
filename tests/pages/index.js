@@ -1,0 +1,6 @@
+export { NavbarPage } from './NavbarPage.js'
+export { HeroPage } from './HeroPage.js'
+export { AboutPage } from './AboutPage.js'
+export { ExperiencePage } from './ExperiencePage.js'
+export { SkillsPage } from './SkillsPage.js'
+export { ContactPage } from './ContactPage.js'
