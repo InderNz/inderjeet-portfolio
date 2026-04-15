@@ -305,9 +305,17 @@ export default function Home() {
                     to: '#contact',
                     icon: <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16" fill="none"><rect x="1" y="3" width="14" height="10" rx="2" stroke="currentColor" strokeWidth="1.5"/><path d="M1 5l7 5 7-5" stroke="currentColor" strokeWidth="1.5"/></svg>,
                   },
+                  {
+                    label: 'My GitHub',
+                    to: 'https://github.com/InderNz',
+                    external: true,
+                    icon: <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16" fill="none"><path d="M8 1C4.134 1 1 4.134 1 8c0 3.09 2.006 5.71 4.787 6.635.35.064.478-.152.478-.337 0-.166-.006-.606-.01-1.19-1.947.423-2.358-.938-2.358-.938-.318-.808-.777-1.023-.777-1.023-.635-.434.048-.425.048-.425.702.049 1.072.72 1.072.72.624 1.069 1.638.76 2.037.582.063-.453.244-.761.444-.936-1.554-.177-3.188-.777-3.188-3.456 0-.763.273-1.387.72-1.876-.072-.177-.312-.888.068-1.85 0 0 .586-.188 1.922.716A6.71 6.71 0 018 4.965c.594.003 1.192.08 1.75.235 1.334-.904 1.919-.717 1.919-.717.382.963.142 1.674.07 1.85.448.49.719 1.114.719 1.877 0 2.686-1.637 3.277-3.196 3.45.251.216.475.643.475 1.296 0 .935-.009 1.69-.009 1.92 0 .187.126.405.482.336C12.996 13.707 15 11.088 15 8c0-3.866-3.134-7-7-7z" fill="currentColor"/></svg>,
+                  },
                 ].map((item, i) => (
                   <a key={i} href={item.to}
-                    onClick={(e) => { e.preventDefault(); scrollTo(item.to) }}
+                    onClick={(e) => { if (!item.external) { e.preventDefault(); scrollTo(item.to) } }}
+                    target={item.external ? '_blank' : undefined}
+                    rel={item.external ? 'noopener noreferrer' : undefined}
                     onMouseEnter={() => setHoveredLink(i)}
                     onMouseLeave={() => setHoveredLink(null)}
                     style={{

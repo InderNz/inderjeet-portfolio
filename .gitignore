@@ -12,9 +12,17 @@ dist
 dist-ssr
 *.local
 
+# Environment — never commit credentials
+.env
+.env.*
+
+# QA Agent pipeline — internal data, not for version control
+.jira-agent/
+
 # Playwright
 playwright-report/
 test-results/
+failure-*.png
 
 # Editor directories and files
 .vscode/*
