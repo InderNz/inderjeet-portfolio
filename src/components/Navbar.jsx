@@ -50,7 +50,6 @@ export default function Navbar() {
   const { theme, toggleTheme } = useTheme()
   const [activeSection, setActiveSection] = useState('home')
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
-  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768)
@@ -123,7 +122,6 @@ export default function Navbar() {
     } else {
       window.location.assign(`/#${id}`)
     }
-    setMenuOpen(false)
   }
 
   return (
@@ -135,7 +133,7 @@ export default function Navbar() {
           <Link
             to="/"
             aria-label="Home"
-            onClick={(e) => { e.preventDefault(); if (pathname === '/') { window.scrollTo({ top: 0, behavior: 'smooth' }) } else { navigate('/') } setMenuOpen(false) }}
+            onClick={(e) => { e.preventDefault(); if (pathname === '/') { window.scrollTo({ top: 0, behavior: 'smooth' }) } else { navigate('/') } }}
             style={iconBtnStyle(activeSection === 'home')}
           >
             <svg width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.5" viewBox="0 0 24 24">
@@ -145,24 +143,38 @@ export default function Navbar() {
 
           {isMobile ? (
             <>
-              <div style={{ flex: 1 }} />
+              <div style={{ display: 'flex', overflowX: 'auto', flex: 1, gap: '0.1rem', msOverflowStyle: 'none', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
+                {links.slice(1).map(link => (
+                  <a
+                    key={link.id}
+                    href={`#${link.id}`}
+                    aria-current={activeSection === link.id ? 'page' : undefined}
+                    onClick={(e) => { e.preventDefault(); scrollToSection(link.id) }}
+                    style={{
+                      flexShrink: 0,
+                      fontFamily: 'DM Mono, monospace',
+                      fontSize: '0.55rem',
+                      letterSpacing: '0.1em',
+                      textTransform: 'uppercase',
+                      textDecoration: 'none',
+                      padding: '0.4rem 0.5rem',
+                      borderRadius: '9999px',
+                      whiteSpace: 'nowrap',
+                      color: activeSection === link.id ? 'var(--accent-dark)' : 'var(--accent)',
+                      backgroundColor: activeSection === link.id ? 'var(--nav-active-bg)' : 'transparent',
+                      border: activeSection === link.id ? '1px solid var(--nav-active-bd)' : '1px solid transparent',
+                      backdropFilter: activeSection === link.id ? 'blur(12px)' : 'none',
+                      WebkitBackdropFilter: activeSection === link.id ? 'blur(12px)' : 'none',
+                      boxShadow: activeSection === link.id ? 'inset 0 1px 0 var(--glass-sh-sm), 0 2px 8px var(--accent-bg-lg)' : 'none',
+                      transition: 'all 0.2s',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </div>
               <ThemeToggle theme={theme} onToggle={toggleTheme} />
-              <button
-                aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-                aria-expanded={menuOpen}
-                onClick={() => setMenuOpen(o => !o)}
-                style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '0.4rem', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
-              >
-                {menuOpen ? (
-                  <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                ) : (
-                  <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                  </svg>
-                )}
-              </button>
             </>
           ) : (
             <>
@@ -210,44 +222,6 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* Mobile dropdown */}
-        {isMobile && menuOpen && (
-          <div style={{
-            marginTop: '0.5rem',
-            backgroundColor: 'var(--mobile-menu-bg)',
-            border: '1px solid var(--glass-bd)',
-            borderRadius: '1rem',
-            backdropFilter: 'blur(20px)',
-            WebkitBackdropFilter: 'blur(20px)',
-            boxShadow: '0 4px 16px rgba(0,0,0,0.08)',
-            overflow: 'hidden',
-          }}>
-            {links.slice(1).map(link => (
-              <button
-                key={link.id}
-                onClick={() => scrollToSection(link.id)}
-                style={{
-                  display: 'block',
-                  width: '100%',
-                  textAlign: 'left',
-                  padding: '1rem 1.5rem',
-                  fontFamily: 'DM Mono, monospace',
-                  fontSize: '0.65rem',
-                  letterSpacing: '0.14em',
-                  textTransform: 'uppercase',
-                  color: activeSection === link.id ? 'var(--accent)' : 'var(--text-muted)',
-                  fontWeight: activeSection === link.id ? 600 : 400,
-                  background: 'none',
-                  border: 'none',
-                  borderBottom: '1px solid var(--border-sm)',
-                  cursor: 'pointer',
-                }}
-              >
-                {link.label}
-              </button>
-            ))}
-          </div>
-        )}
       </div>
     </nav>
   )

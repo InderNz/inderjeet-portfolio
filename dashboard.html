@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoSDLC Test Dashboard</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #f5f5f0; color: #1a1a2e; min-height: 100vh; }
+  header { background: #1a1a2e; color: white; padding: 20px 32px; display: flex; align-items: center; justify-content: space-between; }
+  header h1 { font-size: 18px; font-weight: 600; letter-spacing: 0.02em; }
+  header span { font-size: 13px; opacity: 0.6; }
+  .summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; padding: 24px 32px 0; }
+  .stat { background: white; border-radius: 10px; padding: 20px; border: 1px solid #e8e8e4; }
+  .stat .num { font-size: 32px; font-weight: 700; line-height: 1; }
+  .stat .label { font-size: 12px; color: #888; margin-top: 6px; text-transform: uppercase; letter-spacing: 0.06em; }
+  .stat.pass .num { color: #2d7a4f; }
+  .stat.fail .num { color: #c0392b; }
+  .stat.skip .num { color: #e67e22; }
+  .controls { padding: 20px 32px 0; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .filter-btn { padding: 7px 16px; border-radius: 20px; border: 1px solid #ddd; background: white; cursor: pointer; font-size: 13px; color: #555; transition: all 0.15s; }
+  .filter-btn.active { background: #1a1a2e; color: white; border-color: #1a1a2e; }
+  .filter-btn.fail-btn.active { background: #c0392b; border-color: #c0392b; }
+  .filter-btn.pass-btn.active { background: #2d7a4f; border-color: #2d7a4f; }
+  input[type=text] { padding: 7px 14px; border-radius: 20px; border: 1px solid #ddd; font-size: 13px; width: 220px; outline: none; }
+  input[type=text]:focus { border-color: #1a1a2e; }
+  .load-btn { padding: 7px 16px; border-radius: 20px; border: 1px solid #D4762A; background: white; color: #D4762A; cursor: pointer; font-size: 13px; font-weight: 600; transition: all 0.15s; margin-left: auto; }
+  .load-btn:hover { background: #D4762A; color: white; }
+  .results { padding: 20px 32px 40px; display: flex; flex-direction: column; gap: 16px; }
+  .suite { background: white; border-radius: 10px; border: 1px solid #e8e8e4; overflow: hidden; }
+  .suite-header { padding: 14px 20px; display: flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; border-bottom: 1px solid #f0f0ea; }
+  .suite-header:hover { background: #fafaf7; }
+  .suite-title { font-size: 14px; font-weight: 600; flex: 1; }
+  .badge { font-size: 11px; padding: 3px 9px; border-radius: 10px; font-weight: 600; }
+  .badge.pass { background: #e8f5ed; color: #2d7a4f; }
+  .badge.fail { background: #fdecea; color: #c0392b; }
+  .badge.mixed { background: #fff3e0; color: #e67e22; }
+  .test-list { display: none; }
+  .test-list.open { display: block; }
+  .test-row { padding: 11px 20px 11px 44px; border-bottom: 1px solid #f5f5f0; display: flex; align-items: flex-start; gap: 10px; }
+  .test-row:last-child { border-bottom: none; }
+  .test-row.hidden { display: none; }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 5px; flex-shrink: 0; }
+  .status-dot.pass { background: #2d7a4f; }
+  .status-dot.fail { background: #c0392b; }
+  .status-dot.skip { background: #e67e22; }
+  .test-info { flex: 1; min-width: 0; }
+  .test-name { font-size: 13px; color: #1a1a2e; line-height: 1.4; }
+  .test-browser { font-size: 11px; color: #aaa; margin-top: 2px; }
+  .test-duration { font-size: 11px; color: #bbb; margin-left: auto; white-space: nowrap; padding-top: 3px; }
+  .error-block { margin-top: 8px; background: #fdecea; border-radius: 6px; padding: 10px 12px; font-size: 12px; font-family: 'SF Mono', Monaco, monospace; color: #8b1a1a; white-space: pre-wrap; word-break: break-word; max-height: 120px; overflow-y: auto; }
+  .empty { text-align: center; padding: 60px 20px; color: #aaa; }
+  .empty h2 { font-size: 18px; margin-bottom: 8px; color: #ccc; }
+  .dropzone { border: 2px dashed #D4762A; border-radius: 12px; padding: 40px; text-align: center; color: #D4762A; cursor: pointer; transition: background 0.15s; margin: 0 32px; }
+  .dropzone:hover { background: #fff8f3; }
+  .dropzone p { font-size: 14px; margin-top: 8px; color: #888; }
+  .chevron { font-size: 12px; color: #aaa; transition: transform 0.2s; }
+  .chevron.open { transform: rotate(90deg); }
+  .timestamp { font-size: 12px; color: #bbb; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>AutoSDLC — Test Dashboard</h1>
+  <span id="report-time">No report loaded</span>
+</header>
+
+<div class="summary">
+  <div class="stat"><div class="num" id="total-num">—</div><div class="label">Total tests</div></div>
+  <div class="stat pass"><div class="num" id="pass-num">—</div><div class="label">Passed</div></div>
+  <div class="stat fail"><div class="num" id="fail-num">—</div><div class="label">Failed</div></div>
+  <div class="stat skip"><div class="num" id="skip-num">—</div><div class="label">Skipped</div></div>
+</div>
+
+<div class="controls">
+  <button class="filter-btn active" onclick="setFilter('all', this)">All</button>
+  <button class="filter-btn fail-btn" onclick="setFilter('fail', this)">Failed only</button>
+  <button class="filter-btn pass-btn" onclick="setFilter('pass', this)">Passed only</button>
+  <input type="text" id="search" placeholder="Search tests..." oninput="applySearch()">
+  <button class="load-btn" onclick="document.getElementById('file-input').click()">Load results.json</button>
+  <input type="file" id="file-input" accept=".json" style="display:none" onchange="loadFile(event)">
+</div>
+
+<div class="results" id="results">
+  <div class="dropzone" onclick="document.getElementById('file-input').click()" 
+       ondragover="event.preventDefault()" ondrop="handleDrop(event)">
+    <div style="font-size:32px">📊</div>
+    <strong>Drop your results.json here</strong>
+    <p>Or click to browse — generated at <code>playwright-report/results.json</code></p>
+  </div>
+</div>
+
+<script>
+let allData = [];
+let currentFilter = 'all';
+
+function loadFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => parseReport(JSON.parse(e.target.result));
+  reader.readAsText(file);
+}
+
+function handleDrop(event) {
+  event.preventDefault();
+  const file = event.dataTransfer.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => parseReport(JSON.parse(e.target.result));
+  reader.readAsText(file);
+}
+
+function parseReport(data) {
+  allData = [];
+
+  const stats = data.stats || {};
+  document.getElementById('total-num').textContent = (stats.expected || 0) + (stats.unexpected || 0) + (stats.skipped || 0);
+  document.getElementById('pass-num').textContent = stats.expected || 0;
+  document.getElementById('fail-num').textContent = stats.unexpected || 0;
+  document.getElementById('skip-num').textContent = stats.skipped || 0;
+
+  const startTime = stats.startTime ? new Date(stats.startTime).toLocaleString() : 'Unknown';
+  document.getElementById('report-time').textContent = `Run: ${startTime}`;
+
+  // Flatten all suites
+  const suites = [];
+  function walkSuite(suite, path) {
+    const title = suite.title || suite.file || 'Unnamed';
+    const fullPath = path ? `${path} › ${title}` : title;
+    if (suite.specs && suite.specs.length) {
+      const tests = [];
+      suite.specs.forEach(spec => {
+        spec.tests.forEach(test => {
+          const result = test.results[0] || {};
+          const status = result.status === 'passed' ? 'pass' : result.status === 'skipped' ? 'skip' : 'fail';
+          const error = result.error?.message || result.error?.value || '';
+          tests.push({
+            name: spec.title,
+            browser: test.projectName || '',
+            status,
+            duration: result.duration || 0,
+            error: error.slice(0, 400),
+          });
+        });
+      });
+      if (tests.length) suites.push({ title: fullPath, tests });
+    }
+    if (suite.suites) suite.suites.forEach(s => walkSuite(s, fullPath));
+  }
+
+  (data.suites || []).forEach(s => walkSuite(s, ''));
+  allData = suites;
+  renderAll();
+}
+
+function renderAll() {
+  const container = document.getElementById('results');
+  if (!allData.length) {
+    container.innerHTML = '<div class="empty"><h2>No test data</h2><p>Load a results.json file</p></div>';
+    return;
+  }
+
+  const search = document.getElementById('search').value.toLowerCase();
+
+  container.innerHTML = '';
+  allData.forEach((suite, si) => {
+    const filtered = suite.tests.filter(t => {
+      const matchFilter = currentFilter === 'all' || t.status === currentFilter;
+      const matchSearch = !search || t.name.toLowerCase().includes(search) || t.browser.toLowerCase().includes(search);
+      return matchFilter && matchSearch;
+    });
+    if (!filtered.length) return;
+
+    const passed = filtered.filter(t => t.status === 'pass').length;
+    const failed = filtered.filter(t => t.status === 'fail').length;
+    const badgeClass = failed === 0 ? 'pass' : passed === 0 ? 'fail' : 'mixed';
+    const badgeText = failed === 0 ? 'All passed' : passed === 0 ? 'All failed' : `${passed} pass / ${failed} fail`;
+
+    const div = document.createElement('div');
+    div.className = 'suite';
+
+    const shortTitle = suite.title.split(' › ').pop();
+
+    div.innerHTML = `
+      <div class="suite-header" onclick="toggleSuite(this)">
+        <span class="chevron">›</span>
+        <span class="suite-title">${shortTitle}</span>
+        <span class="badge ${badgeClass}">${badgeText}</span>
+        <span class="timestamp">${filtered.length} tests</span>
+      </div>
+      <div class="test-list open">
+        ${filtered.map(t => `
+          <div class="test-row ${t.status}">
+            <div class="status-dot ${t.status}"></div>
+            <div class="test-info">
+              <div class="test-name">${t.name}</div>
+              <div class="test-browser">${t.browser}</div>
+              ${t.error ? `<div class="error-block">${t.error.replace(/</g,'&lt;').replace(/>/g,'&gt;')}</div>` : ''}
+            </div>
+            <div class="test-duration">${t.duration > 0 ? (t.duration/1000).toFixed(1)+'s' : ''}</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+    container.appendChild(div);
+  });
+}
+
+function toggleSuite(header) {
+  const list = header.nextElementSibling;
+  const chevron = header.querySelector('.chevron');
+  list.classList.toggle('open');
+  chevron.classList.toggle('open');
+}
+
+function setFilter(filter, btn) {
+  currentFilter = filter;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderAll();
+}
+
+function applySearch() { renderAll(); }
+</script>
+</body>
+</html>
