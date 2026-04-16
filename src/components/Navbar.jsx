@@ -60,7 +60,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'about', 'experience', 'skills', 'current-focus', 'contact']
+      const sections = ['home', 'about', 'skills', 'experience', 'current-focus', 'contact']
       let current = 'home'
       for (const section of sections) {
         const element = document.getElementById(section)
@@ -170,6 +170,7 @@ export default function Navbar() {
                 <a
                   key={link.id}
                   href={`#${link.id}`}
+                  aria-current={activeSection === link.id ? 'page' : undefined}
                   onClick={(e) => {
                     e.preventDefault()
                     const el = document.getElementById(link.id)
