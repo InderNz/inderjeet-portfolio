@@ -412,6 +412,141 @@ export default function Home() {
         </div>
       </section>
 
+      {/* SKILLS */}
+      <section id="skills" style={{ borderTop: '1px solid var(--border)', backgroundColor: 'var(--bg-section)', minHeight: '100vh', boxSizing: 'border-box' }}>
+        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: isMobile ? '3rem 1.25rem' : '3.5rem 3rem' }}>
+          <span style={sectionLabel}>Expertise</span>
+          <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: 'clamp(2rem, 3.5vw, 2.6rem)', fontWeight: 400, color: 'var(--text-primary)', marginBottom: '1.75rem', lineHeight: 1.1 }}>
+            Skills & Certifications
+          </h2>
+
+          {/* Skills — Two-column table layout */}
+          <div style={{ backgroundColor: 'var(--glass-bg)', border: '1px solid var(--glass-bd)', borderRadius: '1rem', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', overflow: 'hidden', marginBottom: '2.5rem' }}>
+            {[
+              {
+                icon: <svg width="20" height="20" fill="none" stroke="#b84a0a" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>,
+                title: 'Test Management & Leadership',
+                bullets: [
+                  'Programme & Portfolio Test Delivery',
+                  'Stakeholder Engagement — C-Level, Business and Vendors',
+                  'Cross-functional Leadership across Business, Dev and Ops',
+                  'Risk, Issue & Dependency Management',
+                  'Delivery Assurance, Stage Gates & Go-Live Readiness',
+                  'Building, mentoring and scaling high-performance QA teams',
+                  'Test estimation, resource planning and capacity management',
+                ],
+              },
+              {
+                icon: <svg width="20" height="20" fill="none" stroke="#b84a0a" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>,
+                title: 'Test Strategy & Planning',
+                bullets: [
+                  'Enterprise test strategy design — functional, non-functional and compliance',
+                  'Test architecture — framework selection, tooling, environments and data strategy',
+                  'Defect management — lifecycle, triage, root cause analysis and prevention',
+                  'Quality frameworks — defining standards, processes and governance',
+                  'KPI & metrics — defect leakage, test coverage, cycle time, shift-left impact',
+                  'Test reporting to C-suite — executive dashboards and risk-based status reports',
+                  'Vendor and third-party test management',
+                ],
+              },
+              {
+                icon: <svg width="20" height="20" fill="none" stroke="#b84a0a" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>,
+                title: 'Test Automation',
+                bullets: [
+                  'Selenium WebDriver — UI automation across web applications',
+                  'Playwright — modern end-to-end test automation including MCP integration',
+                  'Postman & SoapUI — REST and SOAP API testing',
+                  'BDD with Cucumber and SpecFlow — behaviour-driven development',
+                  'CI/CD pipeline integration — automated test triggering on code commits',
+                  'QYRUS — low/no-code SaaS automation platform',
+                  'Test framework design and automation strategy',
+                ],
+              },
+              {
+                icon: <svg width="20" height="20" fill="none" stroke="#b84a0a" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>,
+                title: 'AI & Automation Tools',
+                bullets: [
+                  'Claude Code — agentic AI coding and test generation',
+                  'n8n — workflow automation and agent orchestration',
+                  'PromptFoo — LLM output testing and hallucination detection',
+                  'LangSmith — LLM observability and evaluation platform',
+                  'Evidently AI — model drift and data quality monitoring',
+                  'AI-assisted test case generation and defect prediction',
+                  'Prompt engineering for reliable and consistent AI outputs',
+                ],
+              },
+              {
+                icon: <svg width="20" height="20" fill="none" stroke="#b84a0a" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>,
+                title: 'Agile & DevOps Quality',
+                bullets: [
+                  'SAFe6 Agilist — Scaled Agile Framework for enterprise delivery',
+                  'Scrum and Kanban — sprint-based and flow-based delivery',
+                  'PRINCE2 Agile — hybrid project and agile delivery',
+                  'Shift-left testing — embedding quality early in the development lifecycle',
+                  'JIRA and Azure DevOps — backlog management, test tracking, reporting',
+                  'Quality gates and Definition of Done enforcement',
+                  'Continuous testing integration within DevOps pipelines',
+                ],
+              },
+              {
+                icon: <svg width="20" height="20" fill="none" stroke="#b84a0a" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg>,
+                title: 'Regulatory & Compliance',
+                bullets: [
+                  'APRA compliance — Australian Prudential Regulation Authority standards',
+                  'FCA-aligned digital banking testing — UK Financial Conduct Authority',
+                  'Payment systems testing — end-to-end payment flow validation',
+                  'Core banking platform validation — neobank and traditional bank systems',
+                  'Regulatory test strategy design for licence granting criteria',
+                  'Audit trail and evidence management for compliance reporting',
+                ],
+              },
+            ].map((row, i, arr) => (
+              <div key={i} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'flex-start', padding: '1.1rem 1.75rem', borderBottom: i < arr.length - 1 ? '1px solid var(--border-sm)' : 'none' }}>
+                {/* Left column */}
+                <div style={{ width: isMobile ? '100%' : '220px', flexShrink: 0, paddingRight: isMobile ? '0' : '2rem', marginBottom: isMobile ? '0.75rem' : '0' }}>
+                  <span style={{ display: 'inline-block', marginBottom: '0.3rem' }}>{row.icon}</span>
+                  <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.4 }}>{row.title}</p>
+                </div>
+                {/* Right column */}
+                <ul style={{ flex: 1, listStyle: 'none', padding: 0, margin: 0, width: isMobile ? '100%' : 'auto' }}>
+                  {row.bullets.map((pt, j) => (
+                    <li key={j} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', marginBottom: '0.3rem' }}>
+                      <span style={{ color: 'var(--accent)', fontSize: '0.75rem', marginTop: '0.2rem', flexShrink: 0 }}>→</span>
+                      <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.88rem', color: 'var(--text-body)', fontWeight: 400, lineHeight: 1.5 }}>{pt}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+
+          {/* Certifications — full width, 2-column pill grid */}
+          <span style={sectionLabel}>Certifications</span>
+          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '0.4rem' }}>
+            {[
+              { name: 'SAFe 6 Agilist', body: 'Scaled Agile', status: 'active' },
+              { name: 'PRINCE2 Agile Practitioner', body: 'AXELOS', status: 'active' },
+              { name: 'Certified Scrum Master (CSM)', body: 'Scrum Alliance', status: 'active' },
+              { name: 'Certified Scrum Product Owner (CSPO)', body: 'Scrum Alliance', status: 'active' },
+              { name: 'Certified Software Test Manager (CSTM)', body: 'ASTQB', status: 'active' },
+              { name: 'ISTQB CTFL v4.0', body: 'Foundation Level', status: 'progress' },
+              { name: 'ISTQB CT-AI', body: 'AI Testing Specialist', status: 'progress' },
+              { name: 'Azure AI-900', body: 'Microsoft', status: 'progress' },
+            ].map((cert, i) => (
+              <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem', padding: '0.5rem 1rem', backgroundColor: 'var(--glass-bg)', border: '1px solid var(--glass-bd)', borderRadius: '9999px', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', boxShadow: 'inset 0 1px 0 var(--glass-sh)' }}>
+                <div>
+                  <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.75rem', fontWeight: 500, color: 'var(--text-primary)' }}>{cert.name}</p>
+                  <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.52rem', color: 'var(--text-faint)', letterSpacing: '0.06em' }}>{cert.body}</p>
+                </div>
+                <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.52rem', letterSpacing: '0.08em', textTransform: 'uppercase', padding: '0.2rem 0.6rem', borderRadius: '9999px', flexShrink: 0, backgroundColor: cert.status === 'active' ? 'var(--teal-bg-xs)' : 'var(--accent-bg-sm)', color: cert.status === 'active' ? 'var(--teal)' : 'var(--accent)', border: cert.status === 'active' ? '1px solid var(--teal-bd)' : '1px solid var(--accent-bg-xl)' }}>
+                  {cert.status === 'active' ? 'Active' : 'In Progress'}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* EXPERIENCE */}
       <section id="experience" style={{ borderTop: '1px solid var(--border)' }}>
         <div style={{ maxWidth: '1100px', margin: '0 auto', padding: isMobile ? '3rem 1.25rem' : '3.5rem 3rem' }}>
@@ -549,141 +684,6 @@ export default function Home() {
                 </div>
               ))}
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* SKILLS */}
-      <section id="skills" style={{ borderTop: '1px solid var(--border)', backgroundColor: 'var(--bg-section)', minHeight: '100vh', boxSizing: 'border-box' }}>
-        <div style={{ maxWidth: '1100px', margin: '0 auto', padding: isMobile ? '3rem 1.25rem' : '3.5rem 3rem' }}>
-          <span style={sectionLabel}>Expertise</span>
-          <h2 style={{ fontFamily: 'Playfair Display, serif', fontSize: 'clamp(2rem, 3.5vw, 2.6rem)', fontWeight: 400, color: 'var(--text-primary)', marginBottom: '1.75rem', lineHeight: 1.1 }}>
-            Skills & Certifications
-          </h2>
-
-          {/* Skills — Two-column table layout */}
-          <div style={{ backgroundColor: 'var(--glass-bg)', border: '1px solid var(--glass-bd)', borderRadius: '1rem', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', overflow: 'hidden', marginBottom: '2.5rem' }}>
-            {[
-              {
-                icon: <svg width="20" height="20" fill="none" stroke="#b84a0a" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/></svg>,
-                title: 'Test Management & Leadership',
-                bullets: [
-                  'Programme & Portfolio Test Delivery',
-                  'Stakeholder Engagement — C-Level, Business and Vendors',
-                  'Cross-functional Leadership across Business, Dev and Ops',
-                  'Risk, Issue & Dependency Management',
-                  'Delivery Assurance, Stage Gates & Go-Live Readiness',
-                  'Building, mentoring and scaling high-performance QA teams',
-                  'Test estimation, resource planning and capacity management',
-                ],
-              },
-              {
-                icon: <svg width="20" height="20" fill="none" stroke="#b84a0a" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/></svg>,
-                title: 'Test Strategy & Planning',
-                bullets: [
-                  'Enterprise test strategy design — functional, non-functional and compliance',
-                  'Test architecture — framework selection, tooling, environments and data strategy',
-                  'Defect management — lifecycle, triage, root cause analysis and prevention',
-                  'Quality frameworks — defining standards, processes and governance',
-                  'KPI & metrics — defect leakage, test coverage, cycle time, shift-left impact',
-                  'Test reporting to C-suite — executive dashboards and risk-based status reports',
-                  'Vendor and third-party test management',
-                ],
-              },
-              {
-                icon: <svg width="20" height="20" fill="none" stroke="#b84a0a" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>,
-                title: 'Test Automation',
-                bullets: [
-                  'Selenium WebDriver — UI automation across web applications',
-                  'Playwright — modern end-to-end test automation including MCP integration',
-                  'Postman & SoapUI — REST and SOAP API testing',
-                  'BDD with Cucumber and SpecFlow — behaviour-driven development',
-                  'CI/CD pipeline integration — automated test triggering on code commits',
-                  'QYRUS — low/no-code SaaS automation platform',
-                  'Test framework design and automation strategy',
-                ],
-              },
-              {
-                icon: <svg width="20" height="20" fill="none" stroke="#b84a0a" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>,
-                title: 'AI & Automation Tools',
-                bullets: [
-                  'Claude Code — agentic AI coding and test generation',
-                  'n8n — workflow automation and agent orchestration',
-                  'PromptFoo — LLM output testing and hallucination detection',
-                  'LangSmith — LLM observability and evaluation platform',
-                  'Evidently AI — model drift and data quality monitoring',
-                  'AI-assisted test case generation and defect prediction',
-                  'Prompt engineering for reliable and consistent AI outputs',
-                ],
-              },
-              {
-                icon: <svg width="20" height="20" fill="none" stroke="#b84a0a" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>,
-                title: 'Agile & DevOps Quality',
-                bullets: [
-                  'SAFe6 Agilist — Scaled Agile Framework for enterprise delivery',
-                  'Scrum and Kanban — sprint-based and flow-based delivery',
-                  'PRINCE2 Agile — hybrid project and agile delivery',
-                  'Shift-left testing — embedding quality early in the development lifecycle',
-                  'JIRA and Azure DevOps — backlog management, test tracking, reporting',
-                  'Quality gates and Definition of Done enforcement',
-                  'Continuous testing integration within DevOps pipelines',
-                ],
-              },
-              {
-                icon: <svg width="20" height="20" fill="none" stroke="#b84a0a" strokeWidth="1.5" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg>,
-                title: 'Regulatory & Compliance',
-                bullets: [
-                  'APRA compliance — Australian Prudential Regulation Authority standards',
-                  'FCA-aligned digital banking testing — UK Financial Conduct Authority',
-                  'Payment systems testing — end-to-end payment flow validation',
-                  'Core banking platform validation — neobank and traditional bank systems',
-                  'Regulatory test strategy design for licence granting criteria',
-                  'Audit trail and evidence management for compliance reporting',
-                ],
-              },
-            ].map((row, i, arr) => (
-              <div key={i} style={{ display: 'flex', flexDirection: isMobile ? 'column' : 'row', alignItems: 'flex-start', padding: '1.1rem 1.75rem', borderBottom: i < arr.length - 1 ? '1px solid var(--border-sm)' : 'none' }}>
-                {/* Left column */}
-                <div style={{ width: isMobile ? '100%' : '220px', flexShrink: 0, paddingRight: isMobile ? '0' : '2rem', marginBottom: isMobile ? '0.75rem' : '0' }}>
-                  <span style={{ display: 'inline-block', marginBottom: '0.3rem' }}>{row.icon}</span>
-                  <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.88rem', fontWeight: 600, color: 'var(--text-primary)', lineHeight: 1.4 }}>{row.title}</p>
-                </div>
-                {/* Right column */}
-                <ul style={{ flex: 1, listStyle: 'none', padding: 0, margin: 0, width: isMobile ? '100%' : 'auto' }}>
-                  {row.bullets.map((pt, j) => (
-                    <li key={j} style={{ display: 'flex', alignItems: 'flex-start', gap: '0.6rem', marginBottom: '0.3rem' }}>
-                      <span style={{ color: 'var(--accent)', fontSize: '0.75rem', marginTop: '0.2rem', flexShrink: 0 }}>→</span>
-                      <span style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.88rem', color: 'var(--text-body)', fontWeight: 400, lineHeight: 1.5 }}>{pt}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
-          {/* Certifications — full width, 2-column pill grid */}
-          <span style={sectionLabel}>Certifications</span>
-          <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 1fr', gap: '0.4rem' }}>
-            {[
-              { name: 'SAFe 6 Agilist', body: 'Scaled Agile', status: 'active' },
-              { name: 'PRINCE2 Agile Practitioner', body: 'AXELOS', status: 'active' },
-              { name: 'Certified Scrum Master (CSM)', body: 'Scrum Alliance', status: 'active' },
-              { name: 'Certified Scrum Product Owner (CSPO)', body: 'Scrum Alliance', status: 'active' },
-              { name: 'Certified Software Test Manager (CSTM)', body: 'ASTQB', status: 'active' },
-              { name: 'ISTQB CTFL v4.0', body: 'Foundation Level', status: 'progress' },
-              { name: 'ISTQB CT-AI', body: 'AI Testing Specialist', status: 'progress' },
-              { name: 'Azure AI-900', body: 'Microsoft', status: 'progress' },
-            ].map((cert, i) => (
-              <div key={i} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '0.75rem', padding: '0.5rem 1rem', backgroundColor: 'var(--glass-bg)', border: '1px solid var(--glass-bd)', borderRadius: '9999px', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', boxShadow: 'inset 0 1px 0 var(--glass-sh)' }}>
-                <div>
-                  <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.75rem', fontWeight: 500, color: 'var(--text-primary)' }}>{cert.name}</p>
-                  <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.52rem', color: 'var(--text-faint)', letterSpacing: '0.06em' }}>{cert.body}</p>
-                </div>
-                <span style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.52rem', letterSpacing: '0.08em', textTransform: 'uppercase', padding: '0.2rem 0.6rem', borderRadius: '9999px', flexShrink: 0, backgroundColor: cert.status === 'active' ? 'var(--teal-bg-xs)' : 'var(--accent-bg-sm)', color: cert.status === 'active' ? 'var(--teal)' : 'var(--accent)', border: cert.status === 'active' ? '1px solid var(--teal-bd)' : '1px solid var(--accent-bg-xl)' }}>
-                  {cert.status === 'active' ? 'Active' : 'In Progress'}
-                </span>
-              </div>
-            ))}
           </div>
         </div>
       </section>

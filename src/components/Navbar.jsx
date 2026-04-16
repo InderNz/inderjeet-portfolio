@@ -5,8 +5,8 @@ import { useTheme } from '../hooks/useTheme'
 const links = [
   { label: 'Home', id: 'home' },
   { label: 'About', id: 'about' },
-  { label: 'Experience', id: 'experience' },
   { label: 'Skills', id: 'skills' },
+  { label: 'Experience', id: 'experience' },
   { label: 'Current Focus', id: 'current-focus' },
   { label: 'Contact', id: 'contact' },
 ]
