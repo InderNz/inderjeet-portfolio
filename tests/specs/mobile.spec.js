@@ -32,7 +32,7 @@ test.describe('@Regression Mobile — iPhone 13 (375x812)', () => {
 
   test('@P1 experience visible on iPhone viewport', async ({ page }) => {
     await expect(page.getByText('20+ Years of Delivery')).toBeVisible()
-    await expect(page.getByText('Shawbrook Bank')).toBeVisible()
+    await expect(page.locator('#experience').getByText('Shawbrook Bank', { exact: true })).toBeVisible()
   })
 
   test('@P2 contact details visible on iPhone viewport', async ({ page }) => {
@@ -59,7 +59,7 @@ test.describe('@Regression Mobile — Android (360x800)', () => {
 
   test('@P1 key content visible on Android viewport', async ({ page }) => {
     await expect(page.getByText('AI Quality Engineering Leader')).toBeVisible()
-    await expect(page.getByText('Shawbrook Bank')).toBeVisible()
+    await expect(page.locator('#experience').getByText('Shawbrook Bank', { exact: true })).toBeVisible()
     await expect(page.getByText('nz.inderjeet@gmail.com')).toBeVisible()
   })
 })

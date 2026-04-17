@@ -55,6 +55,10 @@ export default function Home() {
 
   const handleFormSubmit = async (e) => {
     e.preventDefault()
+    if (!emailjsReady) {
+      setErrors({ submit: 'Contact form is not configured. Please try another method.' })
+      return
+    }
     const newErrors = {}
     if (!formData.name || formData.name.trim().length < 2) {
       newErrors.name = 'Please enter your full name'
@@ -786,6 +790,18 @@ export default function Home() {
                     </Tag>
                   )
                 })}
+
+                {/* Contact form unavailable warning */}
+                {!emailjsReady && (
+                  <div
+                    role="alert"
+                    style={{ padding: '0.85rem 1.1rem', backgroundColor: 'var(--accent-bg-xs)', border: '1px solid var(--accent-bg-lg)', borderRadius: '0.75rem', fontFamily: 'DM Sans, sans-serif', fontSize: '0.8rem', color: 'var(--text-body)', lineHeight: 1.6 }}
+                  >
+                    Contact form unavailable — environment not configured.{' '}
+                    Please email directly at{' '}
+                    <a href="mailto:nz.inderjeet@gmail.com" style={{ color: 'var(--accent)', textDecoration: 'underline' }}>nz.inderjeet@gmail.com</a>.
+                  </div>
+                )}
 
                 {/* Send Message capsule */}
                 <button

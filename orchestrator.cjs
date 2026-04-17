@@ -2,7 +2,7 @@
 // Polls Jira every 30s. Your Mac calls Jira. Jira never calls your Mac.
 // Run: node orchestrator.js
 
-const { execSync, exec } = require('child_process');
+const { execSync, spawn } = require('child_process');
 const https = require('https');
 const path = require('path');
 const fs = require('fs');
@@ -95,17 +95,35 @@ function log(msg) {
   console.log(`[${new Date().toISOString()}] ${msg}`);
 }
 
-function runClaude(prompt, key) {
+function runClaude(promptText, key) {
   return new Promise((resolve) => {
-    log(`[CLAUDE] Running prompt for ${key} (${prompt.length} chars)`);
+    log(`[CLAUDE] Running prompt for ${key} (${promptText.length} chars)`);
     const tmpFile = `/tmp/claude-prompt-${key}.txt`;
-    fs.writeFileSync(tmpFile, prompt);
-    const cmd = `cd ${PORTFOLIO} && claude --print < ${tmpFile}`;
-    exec(cmd, { timeout: 300_000, maxBuffer: 10 * 1024 * 1024 }, (err, stdout, stderr) => {
+    fs.writeFileSync(tmpFile, promptText, { mode: 0o600 });
+
+    const child = spawn('claude', ['--print', '--dangerously-skip-permissions'], {
+      cwd: PORTFOLIO,
+      env: { ...process.env },
+      stdio: ['pipe', 'pipe', 'pipe'],
+    });
+
+    fs.createReadStream(tmpFile).pipe(child.stdin);
+
+    let stdout = '';
+    let stderr = '';
+    child.stdout.on('data', d => { stdout += d; });
+    child.stderr.on('data', d => { stderr += d; });
+
+    const timer = setTimeout(() => {
+      child.kill();
+      log(`[CLAUDE] Timeout for ${key}`);
+    }, 300_000);
+
+    child.on('close', () => {
+      clearTimeout(timer);
       try { fs.unlinkSync(tmpFile); } catch {}
-      if (err) log(`[CLAUDE ERROR] ${err.message}`);
       if (stderr) log(`[CLAUDE STDERR] ${stderr.slice(0, 200)}`);
-      resolve(stdout || '');
+      resolve(stdout);
     });
   });
 }
@@ -137,6 +155,10 @@ function runPlaywright(specFile) {
 // Fires when ticket moves to "Selected for Development"
 async function runStage2(ticket) {
   const key = ticket.key;
+  if (!/^[A-Z]+-\d+$/.test(key)) {
+    log(`[SECURITY] Rejected invalid issue key: ${key}`);
+    return;
+  }
   const summary = ticket.fields.summary;
   const description = ticket.fields.description?.content
     ?.flatMap(b => b.content?.map(c => c.text) ?? [])
@@ -210,6 +232,10 @@ async function runStage2(ticket) {
 // ─── STAGE 3: APPROVED — WRITE TESTS + BUILD FEATURE ───────────────────────
 async function runStage3(ticket) {
   const key = ticket.key;
+  if (!/^[A-Z]+-\d+$/.test(key)) {
+    log(`[SECURITY] Rejected invalid issue key: ${key}`);
+    return;
+  }
   const summary = ticket.fields.summary;
 
   log(`[STAGE 3] Starting for ${key}`);

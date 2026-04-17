@@ -1,50 +1,19 @@
 import { test, expect } from '../fixtures/index.js'
 import { goToSite, SCROLL_WAIT } from '../utils/helpers.js'
 
-/** Helper — returns whether the current viewport is mobile-sized */
-async function isMobileViewport(page) {
-  return page.viewportSize()?.width < 768
-}
-
-/** Helper — on mobile, opens the hamburger menu so nav buttons are visible */
-async function openMobileMenuIfNeeded(page) {
-  const mobile = await isMobileViewport(page)
-  if (mobile) {
-    const hamburger = page.getByRole('button', { name: /open menu/i })
-    if (await hamburger.isVisible()) {
-      await hamburger.click()
-      await page.waitForTimeout(300)
-    }
-  }
-}
-
 /**
- * Helper — returns ordered nav label texts.
- * Desktop: reads <a href> links inside <nav>.
- * Mobile:  reads <button> elements inside the mobile dropdown after opening it.
+ * Helper — returns ordered nav section-link label texts.
+ * Both mobile and desktop use <a href="#..."> anchor links in the navbar.
  */
 async function getNavOrder(page) {
-  const mobile = await isMobileViewport(page)
-  if (mobile) {
-    await openMobileMenuIfNeeded(page)
-    const buttons = page.locator('nav button')
-    const count = await buttons.count()
-    const labels = []
-    for (let i = 0; i < count; i++) {
-      const text = (await buttons.nth(i).innerText()).trim().toLowerCase()
-      if (text && !text.includes('close') && !text.includes('open')) labels.push(text)
-    }
-    return labels
-  } else {
-    const navLinks = page.locator('nav a[href]')
-    const count = await navLinks.count()
-    const labels = []
-    for (let i = 0; i < count; i++) {
-      const text = (await navLinks.nth(i).innerText()).trim().toLowerCase()
-      if (text) labels.push(text)
-    }
-    return labels
+  const navLinks = page.locator('nav a[href^="#"]')
+  const count = await navLinks.count()
+  const labels = []
+  for (let i = 0; i < count; i++) {
+    const text = (await navLinks.nth(i).innerText()).trim().toLowerCase()
+    if (text) labels.push(text)
   }
+  return labels
 }
 
 test.describe('IPW-22 — Navbar order: Skills before Experience', () => {
@@ -64,48 +33,23 @@ test.describe('IPW-22 — Navbar order: Skills before Experience', () => {
   })
 
   test('@P1 all nav links are still present after reorder', async ({ page }) => {
-    await openMobileMenuIfNeeded(page)
-    const mobile = await isMobileViewport(page)
-
-    if (mobile) {
-      // Mobile: nav items are buttons
-      await expect(page.getByRole('button', { name: /about/i }).first()).toBeVisible()
-      await expect(page.getByRole('button', { name: /skills/i }).first()).toBeVisible()
-      await expect(page.getByRole('button', { name: /experience/i }).first()).toBeVisible()
-      await expect(page.getByRole('button', { name: /current focus/i }).first()).toBeVisible()
-      await expect(page.getByRole('button', { name: /contact/i }).first()).toBeVisible()
-    } else {
-      // Desktop: nav items are <a> links
-      await expect(page.getByRole('link', { name: /^about$/i })).toBeVisible()
-      await expect(page.getByRole('link', { name: /^skills$/i })).toBeVisible()
-      await expect(page.getByRole('link', { name: /^experience$/i })).toBeVisible()
-      await expect(page.getByRole('link', { name: /^current focus$/i })).toBeVisible()
-      await expect(page.getByRole('link', { name: /^contact$/i })).toBeVisible()
-    }
+    // Both mobile and desktop use <a href="#..."> anchor links
+    const nav = page.locator('nav')
+    await expect(nav.getByRole('link', { name: /^about$/i })).toBeVisible()
+    await expect(nav.getByRole('link', { name: /^skills/i }).first()).toBeVisible()
+    await expect(nav.getByRole('link', { name: /^experience$/i })).toBeVisible()
+    await expect(nav.getByRole('link', { name: /^current focus$/i })).toBeVisible()
+    await expect(nav.getByRole('link', { name: /^contact$/i })).toBeVisible()
   })
 
   test('@P1 clicking Skills scrolls to the skills section', async ({ page }) => {
-    await openMobileMenuIfNeeded(page)
-    const mobile = await isMobileViewport(page)
-
-    if (mobile) {
-      await page.getByRole('button', { name: /^skills$/i }).click()
-    } else {
-      await page.getByRole('link', { name: /^skills$/i }).click()
-    }
+    await page.locator('nav').getByRole('link', { name: /^skills/i }).first().click()
     await page.waitForTimeout(SCROLL_WAIT)
     await expect(page.locator('#skills')).toBeInViewport()
   })
 
   test('@P1 clicking Experience scrolls to the experience section', async ({ page }) => {
-    await openMobileMenuIfNeeded(page)
-    const mobile = await isMobileViewport(page)
-
-    if (mobile) {
-      await page.getByRole('button', { name: /^experience$/i }).click()
-    } else {
-      await page.getByRole('link', { name: /^experience$/i }).click()
-    }
+    await page.locator('nav').getByRole('link', { name: /^experience$/i }).click()
     await page.waitForTimeout(SCROLL_WAIT)
     await expect(page.locator('#experience')).toBeInViewport()
   })
