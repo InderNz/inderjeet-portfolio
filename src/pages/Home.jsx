@@ -39,6 +39,12 @@ export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [errors, setErrors] = useState({})
 
+  const emailjsReady = !!(
+    import.meta.env.VITE_EMAILJS_SERVICE_ID &&
+    import.meta.env.VITE_EMAILJS_TEMPLATE_ID &&
+    import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+  )
+
   const handleFormChange = (e) => {
     const { name, value } = e.target
     setFormData(prev => ({ ...prev, [name]: value }))
@@ -66,8 +72,8 @@ export default function Home() {
     setIsSubmitting(true)
     try {
       await emailjs.send(
-        'service_pmdmyv9',
-        'template_h4uu4nn',
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
         {
           from_name: formData.name,
           from_email: formData.email,
@@ -75,7 +81,7 @@ export default function Home() {
           message: formData.message,
           to_email: 'nz.inderjeet@gmail.com',
         },
-        'lDrpITvfDZ_6SCzm6'
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
       )
       setSubmitted(true)
       setTimeout(() => {
@@ -84,7 +90,7 @@ export default function Home() {
         setFormData({ name: '', email: '', company: '', message: '' })
         setErrors({})
       }, 3000)
-    } catch (error) {
+    } catch {
       setErrors({ submit: 'Something went wrong. Please email me directly at nz.inderjeet@gmail.com' })
     } finally {
       setIsSubmitting(false)
@@ -782,10 +788,12 @@ export default function Home() {
                 })}
 
                 {/* Send Message capsule */}
-                <div
+                <button
+                  type="button"
                   onClick={() => setIsModalOpen(true)}
-                  style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', padding: '0.85rem 1.1rem', backgroundColor: 'var(--glass-bg)', border: '1px solid var(--glass-bd)', borderRadius: '9999px', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', boxShadow: 'inset 0 1px 0 var(--glass-sh)', cursor: 'pointer', transition: 'border-color 0.2s' }}
-                  onMouseEnter={e => e.currentTarget.style.borderColor = '#b84a0a'}
+                  disabled={!emailjsReady}
+                  style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', padding: '0.85rem 1.1rem', backgroundColor: 'var(--glass-bg)', border: '1px solid var(--glass-bd)', borderRadius: '9999px', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', boxShadow: 'inset 0 1px 0 var(--glass-sh)', cursor: emailjsReady ? 'pointer' : 'not-allowed', opacity: emailjsReady ? 1 : 0.5, transition: 'border-color 0.2s', width: '100%', textAlign: 'left', fontFamily: 'inherit' }}
+                  onMouseEnter={e => { if (emailjsReady) e.currentTarget.style.borderColor = '#b84a0a' }}
                   onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--glass-bd)'}
                 >
                   <span style={{ color: 'var(--accent)', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
@@ -797,7 +805,7 @@ export default function Home() {
                     <p style={{ fontFamily: 'DM Mono, monospace', fontSize: '0.52rem', letterSpacing: '0.15em', textTransform: 'uppercase', color: 'var(--text-faint)', marginBottom: '0.1rem' }}>Send Message</p>
                     <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.82rem', color: 'var(--text-primary)' }}>Send me a direct message</p>
                   </div>
-                </div>
+                </button>
               </div>
             </div>
 
@@ -851,7 +859,13 @@ export default function Home() {
               aria-label="Close"
             >×</button>
 
-            {submitted ? (
+            {!emailjsReady ? (
+              <div style={{ textAlign: 'center', padding: '2rem 0' }}>
+                <div style={{ fontSize: '2rem', marginBottom: '1rem' }}>⚠️</div>
+                <p style={{ fontFamily: 'Playfair Display, serif', fontSize: '1.2rem', fontWeight: 400, color: '#1c1917', marginBottom: '0.5rem' }}>Contact form unavailable — missing configuration</p>
+                <p style={{ fontFamily: 'DM Sans, sans-serif', fontSize: '0.85rem', color: '#78716c' }}>Please reach me directly at <a href="mailto:nz.inderjeet@gmail.com" style={{ color: '#b84a0a' }}>nz.inderjeet@gmail.com</a></p>
+              </div>
+            ) : submitted ? (
               <div style={{ textAlign: 'center', padding: '2rem 0' }}>
                 <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>✅</div>
                 <p style={{ fontFamily: 'Playfair Display, serif', fontSize: '1.4rem', fontWeight: 400, color: '#1c1917' }}>Message sent! I'll be in touch soon.</p>

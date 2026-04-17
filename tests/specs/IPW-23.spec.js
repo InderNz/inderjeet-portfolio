@@ -27,14 +27,6 @@ async function scrollToSection(page, id) {
   await page.waitForTimeout(SCROLL_SETTLE)
 }
 
-/** Return the computed background-color of a nav link (resolves CSS variables) */
-async function navLinkBg(page, linkText) {
-  return page.evaluate((text) => {
-    const links = [...document.querySelectorAll('nav a')]
-    const link = links.find(a => a.textContent.trim().toLowerCase() === text.toLowerCase())
-    return link ? window.getComputedStyle(link).backgroundColor : null
-  }, linkText)
-}
 
 /** Return true if the nav link has aria-current="page" */
 async function isNavLinkActive(page, linkText) {

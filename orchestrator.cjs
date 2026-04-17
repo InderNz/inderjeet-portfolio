@@ -5,6 +5,7 @@
 const { execSync, exec } = require('child_process');
 const https = require('https');
 const path = require('path');
+const fs = require('fs');
 
 // ─── CONFIG ────────────────────────────────────────────────────────────────
 const JIRA_HOST    = 'inderprofile.atlassian.net';
@@ -94,11 +95,14 @@ function log(msg) {
   console.log(`[${new Date().toISOString()}] ${msg}`);
 }
 
-function runClaude(prompt) {
+function runClaude(prompt, key) {
   return new Promise((resolve) => {
-    log(`[CLAUDE] Running: ${prompt.slice(0, 80)}...`);
-    const cmd = `cd ${PORTFOLIO} && claude --dangerously-skip-permissions --print "${prompt.replace(/"/g, '\\"')}"`;
+    log(`[CLAUDE] Running prompt for ${key} (${prompt.length} chars)`);
+    const tmpFile = `/tmp/claude-prompt-${key}.txt`;
+    fs.writeFileSync(tmpFile, prompt);
+    const cmd = `cd ${PORTFOLIO} && claude --print < ${tmpFile}`;
     exec(cmd, { timeout: 300_000, maxBuffer: 10 * 1024 * 1024 }, (err, stdout, stderr) => {
+      try { fs.unlinkSync(tmpFile); } catch {}
       if (err) log(`[CLAUDE ERROR] ${err.message}`);
       if (stderr) log(`[CLAUDE STDERR] ${stderr.slice(0, 200)}`);
       resolve(stdout || '');
@@ -155,7 +159,7 @@ async function runStage2(ticket) {
     `Generate between 4 and 8 test cases covering happy path, edge cases, and regression.`,
   ].join('\n');
 
-  const claudeOut = await runClaude(tcPrompt);
+  const claudeOut = await runClaude(tcPrompt, key);
 
   // Parse test cases — find the JSON array in Claude's output
   let testCases = [];
@@ -182,7 +186,6 @@ async function runStage2(ticket) {
   }
 
   // Save subtask map locally so Stage 3 can update them
-  const fs = require('fs');
   const mapPath = path.join(PORTFOLIO, `.jira-agent/${key}-subtasks.json`);
   fs.mkdirSync(path.dirname(mapPath), { recursive: true });
   fs.writeFileSync(mapPath, JSON.stringify({ key, subtasks: subtaskKeys }, null, 2));
@@ -212,7 +215,6 @@ async function runStage3(ticket) {
   log(`[STAGE 3] Starting for ${key}`);
   await transitionTicket(key, T.IN_TEST);
 
-  const fs = require('fs');
   const mapPath = path.join(PORTFOLIO, `.jira-agent/${key}-subtasks.json`);
   let subtasks = [];
   if (fs.existsSync(mapPath)) {
@@ -241,7 +243,7 @@ async function runStage3(ticket) {
     `- Brand colours: #D4762A (orange), #1a1a2e (dark)`,
   ].join('\n');
 
-  const claudeOut = await runClaude(buildPrompt);
+  const claudeOut = await runClaude(buildPrompt, key);
   log(`[STAGE 3] Claude finished building`);
 
   // Run Playwright to get final results
