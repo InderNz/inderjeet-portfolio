@@ -50,6 +50,7 @@ export default function Navbar() {
   const { theme, toggleTheme } = useTheme()
   const [activeSection, setActiveSection] = useState('home')
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+  const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768)
@@ -85,6 +86,7 @@ export default function Navbar() {
   }
 
   const barStyle = {
+    position: 'relative',
     display: 'flex',
     alignItems: 'center',
     width: isMobile ? '90%' : '100%',
@@ -143,38 +145,83 @@ export default function Navbar() {
 
           {isMobile ? (
             <>
-              <div style={{ display: 'flex', overflowX: 'auto', flex: 1, gap: '0.1rem', msOverflowStyle: 'none', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
-                {links.slice(1).map(link => (
-                  <a
-                    key={link.id}
-                    href={`#${link.id}`}
-                    aria-current={activeSection === link.id ? 'page' : undefined}
-                    onClick={(e) => { e.preventDefault(); scrollToSection(link.id) }}
-                    style={{
-                      flexShrink: 0,
-                      fontFamily: 'DM Mono, monospace',
-                      fontSize: '0.55rem',
-                      letterSpacing: '0.1em',
-                      textTransform: 'uppercase',
-                      textDecoration: 'none',
-                      padding: '0.4rem 0.5rem',
-                      borderRadius: '9999px',
-                      whiteSpace: 'nowrap',
-                      color: activeSection === link.id ? 'var(--accent-dark)' : 'var(--accent)',
-                      backgroundColor: activeSection === link.id ? 'var(--nav-active-bg)' : 'transparent',
-                      border: activeSection === link.id ? '1px solid var(--nav-active-bd)' : '1px solid transparent',
-                      backdropFilter: activeSection === link.id ? 'blur(12px)' : 'none',
-                      WebkitBackdropFilter: activeSection === link.id ? 'blur(12px)' : 'none',
-                      boxShadow: activeSection === link.id ? 'inset 0 1px 0 var(--glass-sh-sm), 0 2px 8px var(--accent-bg-lg)' : 'none',
-                      transition: 'all 0.2s',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    {link.label}
-                  </a>
-                ))}
-              </div>
+              <div style={{ flex: 1 }} />
               <ThemeToggle theme={theme} onToggle={toggleTheme} />
+              <button
+                aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+                aria-expanded={menuOpen}
+                onClick={() => setMenuOpen(o => !o)}
+                style={{
+                  width: '2.2rem',
+                  height: '2.2rem',
+                  borderRadius: '9999px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '4px',
+                  background: 'none',
+                  border: '1px solid transparent',
+                  cursor: 'pointer',
+                  flexShrink: 0,
+                  padding: 0,
+                  color: 'var(--accent)',
+                }}
+              >
+                {menuOpen ? (
+                  <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                ) : (
+                  <svg width="16" height="16" fill="none" stroke="currentColor" strokeWidth="1.8" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                  </svg>
+                )}
+              </button>
+
+              {menuOpen && (
+                <div style={{
+                  position: 'absolute',
+                  top: 'calc(100% + 0.5rem)',
+                  left: 0,
+                  right: 0,
+                  backgroundColor: 'var(--navbar-bg)',
+                  backdropFilter: 'blur(30px)',
+                  WebkitBackdropFilter: 'blur(30px)',
+                  borderRadius: '1rem',
+                  border: '1px solid var(--navbar-bd)',
+                  boxShadow: '0 4px 24px rgba(0,0,0,0.10)',
+                  padding: '0.5rem',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  gap: '0.25rem',
+                }}>
+                  {links.slice(1).map(link => (
+                    <a
+                      key={link.id}
+                      href={`#${link.id}`}
+                      aria-current={activeSection === link.id ? 'page' : undefined}
+                      onClick={(e) => { e.preventDefault(); setMenuOpen(false); scrollToSection(link.id) }}
+                      style={{
+                        fontFamily: 'DM Mono, monospace',
+                        fontSize: '0.65rem',
+                        letterSpacing: '0.12em',
+                        textTransform: 'uppercase',
+                        textDecoration: 'none',
+                        padding: '0.6rem 1rem',
+                        borderRadius: '0.5rem',
+                        color: activeSection === link.id ? 'var(--accent-dark)' : 'var(--accent)',
+                        backgroundColor: activeSection === link.id ? 'var(--nav-active-bg)' : 'transparent',
+                        border: activeSection === link.id ? '1px solid var(--nav-active-bd)' : '1px solid transparent',
+                        transition: 'all 0.2s',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      {link.label}
+                    </a>
+                  ))}
+                </div>
+              )}
             </>
           ) : (
             <>
